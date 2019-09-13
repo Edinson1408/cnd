@@ -1,0 +1,283 @@
+<link href='packages/core/main.css' rel='stylesheet' />
+<link href='packages/daygrid/main.css' rel='stylesheet' />
+<link href='packages/timegrid/main.css' rel='stylesheet' />
+<link href='packages/list/main.css' rel='stylesheet' />
+<script src='packages/core/main.js'></script>
+<script src='packages/interaction/main.js'></script>
+<script src='packages/daygrid/main.js'></script>
+<script src='packages/timegrid/main.js'></script>
+<script src='packages/list/main.js'></script>
+<script>
+
+var calendarEl = document.getElementById('calendar');
+
+var calendar = new FullCalendar.Calendar(calendarEl, {
+  plugins: [ 'interaction', 'dayGrid', 'timeGrid', 'list' ],
+  header: {
+    left: 'prev,next today',
+    center: 'title',
+    right: 'dayGridMonth,timeGridWeek,timeGridDay,listMonth'
+  },
+  defaultDate: '2019-08-12',
+  navLinks: true, // can click day/week names to navigate views
+  businessHours: true, // display business hours
+  
+  selectable: true,
+  dateClick: function(arg, jsEvent, view) {
+    console.log('dateClivk')  ;
+    console.log(arg)
+    console.log(arg.date)
+    var fecha =arg.date;
+    jQuery('#largeModal').modal()
+    jQuery('#txtFecha').val(arg.dateStr)
+    
+      
+  },
+  eventClick:function(arg)
+  {
+      console.log(arg)
+
+  },
+//   select: function(arg) {
+//       console.log('select')
+//       console.log(arg)
+//         // var title = prompt('Event Title:');
+//         // if (title) {
+//         //   calendar.addEvent({
+//         //     title: title,
+//         //     start: arg.start,
+//         //     end: arg.end,
+//         //     allDay: arg.allDay
+//         //   })
+//         // }
+//         // calendar.unselect()
+//       },
+  events: [
+    {
+      title: 'Business Lunch',
+      start: '2019-08-03T13:00:00',
+      constraint: 'businessHours'
+    },
+    {
+      title: 'Meeting',
+      start: '2019-08-13T11:00:00',
+      constraint: 'availableForMeeting', // defined below
+      color: '#257e4a'
+    },
+    {
+      title: 'Conference',
+      start: '2019-08-18',
+      end: '2019-08-20'
+    },
+    {
+      title: 'Party',
+      start: '2019-08-29T20:00:00'
+    },
+
+    // areas where "Meeting" must be dropped
+    {
+      groupId: 'availableForMeeting',
+      start: '2019-08-11T10:00:00',
+      end: '2019-08-11T16:00:00',
+      rendering: 'background'
+    },
+    {
+      groupId: 'availableForMeeting',
+      start: '2019-08-13T10:00:00',
+      end: '2019-08-13T16:00:00',
+      rendering: 'background'
+    },
+
+    // red areas where no events can be dropped
+    {
+      start: '2019-08-24',
+      end: '2019-08-28',
+      overlap: false,
+      rendering: 'background',
+      color: '#ff9f89'
+    },
+    {
+      start: '2019-08-06',
+      end: '2019-08-08',
+      overlap: false,
+      rendering: 'background',
+      color: '#ff9f89'
+    }
+  ]
+});
+
+calendar.render();
+    
+  
+  </script>
+<script>
+
+
+ModalAgregarDocente=()=>{
+    console.log('Agregar Docente');
+        jQuery.ajax({
+        url:`php/Mantenimiento/AgregarAlumno.html`,
+        success: function name(data) {
+            console.log(data);
+            var Html=data;
+            console.log(data);
+            jQuery("#ContenidoModal").html(`${Html}`);
+        }
+      });
+    }
+
+
+      Enviar=()=>{
+             conso=$('#FormularioEnnviar').serialize();
+            console.log(conso);
+      }
+
+
+      BuscarAlumno=()=>{
+          console.log('Buscar');
+          let IdAlumno=jQuery('#IdAlumno').val();
+          let Documento=jQuery('#Documento').val();
+          let Periodo=jQuery('#Periodo').val();
+          
+          console.log(IdAlumno)
+          console.log(Documento)
+          console.log(Periodo)
+          let Buscar='0';
+          if (IdAlumno=='' &&  Documento=='' && Periodo=='')
+          {
+              console.log('Por Favor llene algun campo')
+              swal('Por Favor llene algun campo');
+          }else if ((Periodo!='' && IdAlumno=='') && (Periodo!='' && Documento=='') ) {
+              console.log('Ingresar el id o dni del alumno')
+              swal('Ingresar el id o dni del alumno');
+          } else {
+              if(Periodo=='' && (IdAlumno!='' || Documento!='') )
+              {
+                console.log('Ingresar el Periodo');
+                swal('Ingresar el Periodo');
+              }else {
+                  console.log('todo ready')
+                  Buscar='1';
+              }
+          }
+
+    if(Buscar=='1')
+    {
+        console.log('enviamos el log');
+         jQuery.ajax({
+            url:`php/Controlador/AlumnoC.php`,
+            type: 'POST',
+            data : {'Peticion':'Activacion','IdAlumno':IdAlumno,'Documento':Documento,'Periodo':Periodo},
+            success: (data)=> {
+                console.log(data);
+                let $Obj=JSON.parse(data);
+                console.log($Obj);
+                if(data =='[]'){
+                    console.log("El alumno no se encuentra registrao");
+                }
+                else 
+                {
+                    console.log($Obj[0]);
+                    let IdRegistro=$Obj[0].IDREGISTRO;
+                    console.log('id registro '+IdRegistro);
+                    console.log('Mostremos el html')
+                    jQuery.ajax({
+                        url:`php/Registro/ActivarAlumno.html`,
+                        success: function name(data) {
+                        var Html=data;
+                        jQuery("#profile").html(`${Html}`);
+                        console.log(IdRegistro)
+                            if (IdRegistro!=null) {
+                                console.log('Actualizar');
+                                jQuery('#IdAlumnoA').val($Obj[0].IDALUMNO);
+                                jQuery('#Nombres').val($Obj[0].NOMBRES + ' ' +$Obj[0].APELLIDOS );
+                                jQuery('#PeriodoA').val($Obj[0].PERIODO);
+                                jQuery('#IdRegistro').val(IdRegistro);
+                                
+                                /*jQuery('#IdAlumno').val();
+                                jQuery('#Nombres').val();
+                                jQuery('#IdCarrera').val();
+                                jQuery('#Periodo').val();*/
+                                ArmarSelect('IdCarrera','carreras_tbl','IDCARRERA','DESCR250','');
+                            }else{
+                                console.log('Registrar');
+                                jQuery('#IdAlumnoA').val($Obj[0].IDALUMNO);
+                                jQuery('#Nombres').val($Obj[0].NOMBRES + ' ' +$Obj[0].APELLIDOS );
+                                //jQuery('#IdCarrera').val();
+                                if ($Obj[0].PERIODO!=null) {
+                                    jQuery('#PeriodoA').val($Obj[0].PERIODO);
+                                }else {
+                                    jQuery('#PeriodoA').val(Periodo);    
+                                }
+                                ArmarSelect('IdCarrera','carreras_tbl','IDCARRERA','DESCR250','');
+                                
+                            }
+                            jQuery('#profile-tab').click()
+                        }
+                    });
+                }
+            //var Html=data;
+            //jQuery("#profile").html(`${Html}`);
+            }
+        });
+
+    }
+         
+
+
+      }
+//ActivarAlumno
+</script>
+
+
+<div class="row">        
+   <div class="container">
+        <div class="col-md-12">
+                <div id='script-warning'>
+                    <code>php/get-events.php</code> must be running.
+                  </div>
+                
+                  <div id='loading'>loading...</div>
+                
+                  <div id='calendar'></div>
+            </div>       
+   </div>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+<!--modal -->
+
+<div class="modal fade" id="largeModal" tabindex="-1" role="dialog" aria-labelledby="largeModalLabel" aaria-hidden="true" data-backdrop="static">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="largeModalLabel">Large Modal</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="ContenidoModal">
+                    Fecha : <input type="text" id="txtFecha" name="txtFecha"><br>
+                    titulo : <input type="text" id="txtTitulo" name="txtTitulo"><br>
+                    Hora: <textarea type="text" id="txtHora" name="txtHora" value='10:30'></textarea>textarea<br>
+                    Descripcion : <input type="text" id="txtDescripcion" row='3' name="txtDescripcion"><br>
+                    Color : <input type="color" id="color" value="#ff0000">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" onclick="Enviar();">Confirm</button>
+                </div>
+            </div>
+        </div>
+    </div>
