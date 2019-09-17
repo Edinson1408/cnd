@@ -2,6 +2,7 @@
 <?php 
 /*Incluir las conexiones*/
 //Utlis.php
+session_start();
 require '../Config/Conexion.php';
 class UtlisM extends Conexion
 {
@@ -16,6 +17,16 @@ class UtlisM extends Conexion
             $Query=$this->SelectArray($Sql);
             return json_encode($Query);
     }
+
+    public function CambiarContrasena($POST){
+        $Sql="UPDATE `usuarios_tbl` SET `CONTRASENA`='".$POST['Pass']."' WHERE NOMBRE='".$POST['Usuarios']."' ";
+        $this->Query($Sql);
+        //session_start();
+        session_destroy();
+        
+         
+        
+    }
 }
 
 $Objeto= new UtlisM();
@@ -28,7 +39,16 @@ switch ($_POST['Peticion']) {
         $selec=$Objeto->ArmaSelect($_POST['Tabla'],$_POST['Id'],$_POST['Des']);
         echo $selec;
         break;
+    case 'VerSessiones':
+        echo $_SESSION['USUARIO'];
+        break;
+    case 'CambiarContrasena':
+        $Objeto->CambiarContrasena($_POST);
+        break;
     default:
+    case 'Salir':
+    session_destroy();
+        break;
         # code...
         break;
 }

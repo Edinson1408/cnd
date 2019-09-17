@@ -8,13 +8,20 @@ class Control extends Conexion
     public function ControlLogin($User,$Pass){
         //echo $User;
         //echo $Pass;
-        $_SESSION['USUARIO']=$User;
         
-        $Sql="SELECT A.NOM_USUARIO,B.NOMBRES,B.APELLIDOS,A.TIPO_USUARIO FROM `usuario_tbl` A 
-        LEFT JOIN datos_personales_tbl B ON A.IDPERSONA=B.IDPERSONA 
-        where A.NOM_USUARIO='$User' AND A.PASS_USUARIO='$Pass'";
+        
+        $Sql="SELECT NOMBRE FROM `usuarios_tbl` WHERE NOMBRE='$User' AND CONTRASENA='$Pass' ";
         $Array=$this->SelectArray($Sql);
         echo $Array;
+        if ($Array=='[]')
+        {
+            session_destroy();
+        }
+        else{
+            $_SESSION['USUARIO']=$User;
+        }
+        
+        //echo $_SESSION['USUARIO'];
     }
 }
 

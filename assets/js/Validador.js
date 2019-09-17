@@ -48,13 +48,35 @@ ArmarSelect=($valor,$Tabla,$Id,$Des,$I)=>{
                 key =>{
                     console.log(key, Objeto2[key])
                     $HtmlTablas=`
-                    <option value='${Objeto2[key]['IDCARRERA']}'>${Objeto2[key]['DESCR250']}</option>
+                    <option value='${Objeto2[key][$Id]}'>${Objeto2[key][$Des]}</option>
                       `;
                      res = res.concat($HtmlTablas);
                 }) 
-              jQuery('#'+$valor).html(res)
+                Respuesta=' <option >Seleccione un Examen</option>' +res;
+              jQuery('#'+$valor).html(Respuesta);
         }
     });
 
 }
 
+ValidaSession=()=>{
+   jQuery.ajax({
+               url:`php/Utlis/Utlis.php`,
+               method:'POST',
+               data : {'Peticion':'VerSessiones'},
+               success:(data)=>{
+                   $Usuario=data.trim();
+                   console.log($Usuario.indexOf('Notice</b>:  Undefined index: USUARIO'))
+                   if ($Usuario.indexOf('Notice</b>:  Undefined index: USUARIO')>0) {
+                    window.location.replace("index.html");
+                    
+                   }else{
+                       
+                   }
+               }
+           });
+   
+   
+   
+   }
+   ValidaSession();

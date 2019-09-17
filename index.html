@@ -9,7 +9,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Sufee Admin - HTML5 Admin Template</title>
+    <title>Intranet</title>
     <meta name="description" content="Sufee Admin - HTML5 Admin Template">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -40,18 +40,18 @@
                 <div class="login-logo">
                     <a href="index.html">
                         <!-- <img class="align-content" src="images/logo.png" alt=""> -->
-                        <h2 class="align-content">Clinica de Neurologia Digital</h2>
+                        <h2 class="align-content">Centro Neurologico Digital</h2>
                     </a>
                 </div>
                 <div class="login-form">
                     <form>
                         <div class="form-group">
                             <label>Usuario</label>
-                            <input type="email" class="form-control" placeholder="Email">
+                            <input type="text" class="form-control" placeholder="Email" id="Usuario">
                         </div>
                             <div class="form-group">
                                 <label>Contraseña</label>
-                                <input type="password" class="form-control" placeholder="Password">
+                                <input type="password" class="form-control" placeholder="Password" id="Password">
                         </div>
                                 <!-- <div class="checkbox">
                                     <label>
@@ -62,7 +62,7 @@
                             </label>
 
                                 </div> -->
-                                <button type="submit" class="btn btn-success btn-flat m-b-30 m-t-30">Ingresar</button>
+                                <a type="submit" id="ACCEDER" class="btn btn-success btn-flat m-b-30 m-t-30">Ingresar</a>
                                 <!-- <div class="social-login-content">
                                     <div class="social-button">
                                         <button type="button" class="btn social facebook btn-flat btn-addon mb-3"><i class="ti-facebook"></i>Sign in with facebook</button>
@@ -86,3 +86,44 @@
 </body>
 
 </html>
+
+<script>
+        window.onload = function(){
+            
+           
+            //Asignar la función externa al elemento con id=cerdo.
+            document.getElementById("ACCEDER").onclick = ()=>{
+                var User=document.getElementById('Usuario').value;
+                var Pass=document.getElementById('Password').value;
+                console.log(User);
+                console.log(Pass);
+                if (User=='admin' && Pass=='admin')
+                {
+                    //window.location.replace("intranet.html");
+                }
+                else{
+                    //alert('Usuario o Contraseña Incorrecta')
+                }
+                
+                jQuery.ajax({
+                    url:`php/Config/Control.php`,
+                    method:'POST',
+                    data : {'Control':'Login','User':User,'Pass':Pass},
+                    success:(data)=>{
+                        //console.log(data);
+                        if (data=='[]'){
+                            alert('usuario o contraseña errada')
+                        }
+                        else {
+                           window.location.replace("intranet.html");
+                            
+                        }
+                        
+        
+        
+                    }
+                });
+            };
+        }
+        
+        </script>

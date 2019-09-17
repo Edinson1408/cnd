@@ -1,0 +1,45 @@
+<div class="col-xs-6 col-sm-6">
+        <div class="card">
+            <div class="card-header">
+                <strong>Reporte </strong> <small>Tomografo 2</small>
+            </div>
+            <form id="UsuarioFormulario">
+            <div class="card-body card-block">
+                <div class="form-group">
+                    <label class=" form-control-label">Fecha Inicio</label>
+                    <div class="input-group">
+                        <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
+                        <input class="form-control"  type="date" id="IdTomografo" name="Usuario" value="1" style="display: none">
+                        <input class="form-control"  type="date" id="f1" name="Usuario">
+                    </div>
+                    <small class="form-text text-muted"></small>
+                </div>
+    
+                <div class="form-group">
+                    <label class=" form-control-label">Fecha Fin</label>
+                    <div class="input-group">
+                        <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
+                        <input class="form-control" id="f2" name="Pass" type="date">
+                    </div>
+                    <small class="form-text text-muted"></small>
+                </div>
+               
+            </div>
+            </form>
+            <div class="card-footer">
+               <button type="button" class="btn btn-primary" onclick="Generer();">Generar</button>
+             </div>
+        </div>
+    </div>
+    
+    <script>
+            Generer=()=>{
+                $IdTomografo=jQuery('#IdTomografo').val();
+                $f1=jQuery('#f1').val();
+                $f2=jQuery('#f2').val();
+                $Ruta=`php/Utlis/Reporte.php?IdTomografo=2&F1=`+$f1+`&F2=`+$f2;
+                window.open($Ruta, '_blank')
+                   
+               }
+       
+       </script>

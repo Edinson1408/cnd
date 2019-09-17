@@ -1,0 +1,65 @@
+<div class="col-xs-6 col-sm-6">
+    <div class="card">
+        <div class="card-header">
+            <strong>Usuarios</strong> <small>Combio de Contraseña</small>
+        </div>
+        <form id="UsuarioFormulario">
+        <div class="card-body card-block">
+            <div class="form-group">
+                <label class=" form-control-label">Usuario</label>
+                <div class="input-group">
+                    <div class="input-group-addon"><i class="fa fa-user"></i></div>
+                    <input class="form-control" readonly id="Usuario" name="Usuario">
+                </div>
+                <small class="form-text text-muted"></small>
+            </div>
+
+            <div class="form-group">
+                <label class=" form-control-label">Contraseña</label>
+                <div class="input-group">
+                    <div class="input-group-addon"><i class="fa fa-asterisk"></i></div>
+                    <input class="form-control" id="Pass" name="Pass" type="password">
+                </div>
+                <small class="form-text text-muted"></small>
+            </div>
+           
+        </div>
+        </form>
+        <div class="card-footer">
+           <button type="button" class="btn btn-primary" onclick="GuardarUsuario();">Guardar</button>
+         </div>
+    </div>
+</div>
+
+<script>
+jQuery.ajax({
+               url:`php/Utlis/Utlis.php`,
+               method:'POST',
+               data : {'Peticion':'VerSessiones'},
+               success:(data)=>{
+                   $Usuario=data.trim();
+                   console.log($Usuario);
+                   jQuery('#Usuario').val($Usuario);
+                   if ($Usuario=='') {
+                    //window.location.replace("index.html");
+                    
+                   }else{
+                       
+                   }
+               }
+           });
+   
+           GuardarUsuario=()=>{
+                jQuery.ajax({
+                    url:`php/Utlis/Utlis.php`,
+                    method:'POST',
+                    data : {'Peticion':'CambiarContrasena','Usuarios':jQuery('#Usuario').val(),'Pass':jQuery('#Pass').val()},
+                    success:(data)=>{
+                        $Usuario=data.trim();
+                        console.log($Usuario);
+                        window.location.replace("index.html");
+                    }
+                });
+           }
+   
+   </script>

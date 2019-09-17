@@ -1,0 +1,705 @@
+<link href='packages/core/main.css' rel='stylesheet' />
+<link href='packages/daygrid/main.css' rel='stylesheet' />
+<link href='packages/timegrid/main.css' rel='stylesheet' />
+<link href='packages/list/main.css' rel='stylesheet' />
+<script src='packages/core/main.js'></script>
+<script src='packages/interaction/main.js'></script>
+<script src='packages/daygrid/main.js'></script>
+<script src='packages/timegrid/main.js'></script>
+<script src='packages/list/main.js'></script>
+<script src='packages/core/locales-all.js'></script>
+<script>
+
+// jQuery.ajax({
+//                 url:`php/Controlador/CitasC.php`,
+//                 type: 'POST',
+//                 data : {'Peticion':'MostrarCitas','IdTomografo':'1'},
+//                 success: (data)=> {
+//                                     ObjEventos=JSON.parse(data)
+//                                     console.log(ObjEventos);
+//                                     MostrarCalendario(ObjEventos)
+//                                     // title:jQuery('#txtTitulo').val() +'\n'+'Doctor:'+jQuery('#txtNombreDoctor').val(),
+//                                     // start:jQuery('#txtFecha').val()+"T"+jQuery('#txtHora').val(),
+//                                     // end: jQuery('#txtFecha').val()+"T"+jQuery('#txtHoraFin').val(),
+//                                     // color:jQuery('#color').val(),
+//                                     // description:'asdasd',
+//                                     // textColor:'#FFFFFF',
+//                                     // id:data,
+//                                 }
+//                 });
+
+//MostrarCalendario=(Eventos)=>{
+    var calendarEl = document.getElementById('calendar');
+
+var calendar = new FullCalendar.Calendar(calendarEl, {
+    locale:'es',
+    defaultView:'timeGridWeek',
+    axisFormat: 'HH:mm ',
+			timeFormat: 'HH:mm ', // uppercase H for 24-hour clock
+			agenda: 'HH:mm ', // 5:00 - 6:30
+    minTime: '01:00',
+			maxTime: '24:00',
+            allDaySlot: false,
+
+  plugins: [ 'interaction', 'dayGrid', 'timeGrid', 'list' ],
+  header: {
+    left: 'prev,next today',
+    center: 'title',
+    right: 'dayGridMonth,timeGridWeek,timeGridDay,listMonth'
+  },
+  defaultDate: '2019-09-16',
+  navLinks: true, // can click day/week names to navigate views
+  businessHours: true, // display business hours
+  
+  selectable: true,
+  dateClick: function(arg, jsEvent, view) {
+    console.log('dateClivk')  ;
+    console.log(arg)
+    console.log(arg.date)
+    
+    var fecha =arg.dateStr;
+    console.log(fecha);
+    var HoraFinal= new Date(fecha);
+    let horaFin=sumar30min(HoraFinal);
+    Objeto=fecha.split('T')
+    Fecha=Objeto[0];
+    Horatime=Objeto[1];
+    ObjetoHoratime=Horatime.split('-')
+    Hora=ObjetoHoratime[0];
+    console.log(Fecha)
+    console.log(Hora)
+    jQuery('#txtFecha').val(Fecha)
+    jQuery('#txtHora').val(Hora)
+    jQuery('#txtHoraFin').val(horaFin);
+
+    //armar Select
+    
+    ArmarSelect('txtCodExamen','examenes_tbl','ID_EXAMEN','NOMBRE_EXAMEN','')
+    console.log('hora fin');
+    console.log(horaFin);
+    BuscaCruce(Fecha,Hora);    
+  },
+  
+  eventClick: function(info){
+        console.log(info);
+        //alert('Event: ' + info.event.id);
+        console.log(info.event);
+        /*Ajax para recuperar los datos*/
+
+        //jQuery('#largeModal').modal();
+        RecuperarDatos(info.event.id);
+  },
+//   select: function(arg) {
+//       console.log('select')
+//       console.log(arg)
+//         // var title = prompt('Event Title:');
+//         // if (title) {
+//         //   calendar.addEvent({
+//         //     title: title,
+//         //     start: arg.start,
+//         //     end: arg.end,
+//         //     allDay: arg.allDay
+//         //   })
+//         // }
+//         // calendar.unselect()
+//       },
+  events: 'php/Controlador/CitasC.php?Peticion=MostrarCitas&IdTomografo=2'
+});
+
+calendar.render();
+//}
+
+    
+  
+  </script>
+<script>
+
+
+ModalAgregarDocente=()=>{
+    console.log('Agregar Docente');
+        jQuery.ajax({
+        url:`php/Mantenimiento/AgregarAlumno.html`,
+        success: function name(data) {
+            console.log(data);
+            var Html=data;
+            console.log(data);
+            jQuery("#ContenidoModal").html(`${Html}`);
+        }
+      });
+    }
+
+
+      Enviar=()=>{
+             conso=$('#FormularioEnnviar').serialize();
+            console.log(conso);
+      }
+
+
+      BuscarAlumno=()=>{
+          console.log('Buscar');
+          let IdAlumno=jQuery('#IdAlumno').val();
+          let Documento=jQuery('#Documento').val();
+          let Periodo=jQuery('#Periodo').val();
+          
+          console.log(IdAlumno)
+          console.log(Documento)
+          console.log(Periodo)
+          let Buscar='0';
+          if (IdAlumno=='' &&  Documento=='' && Periodo=='')
+          {
+              console.log('Por Favor llene algun campo')
+              swal('Por Favor llene algun campo');
+          }else if ((Periodo!='' && IdAlumno=='') && (Periodo!='' && Documento=='') ) {
+              console.log('Ingresar el id o dni del alumno')
+              swal('Ingresar el id o dni del alumno');
+          } else {
+              if(Periodo=='' && (IdAlumno!='' || Documento!='') )
+              {
+                console.log('Ingresar el Periodo');
+                swal('Ingresar el Periodo');
+              }else {
+                  console.log('todo ready')
+                  Buscar='1';
+              }
+          }
+
+    if(Buscar=='1')
+    {
+        console.log('enviamos el log');
+         jQuery.ajax({
+            url:`php/Controlador/AlumnoC.php`,
+            type: 'POST',
+            data : {'Peticion':'Activacion','IdAlumno':IdAlumno,'Documento':Documento,'Periodo':Periodo},
+            success: (data)=> {
+                console.log(data);
+                let $Obj=JSON.parse(data);
+                console.log($Obj);
+                if(data =='[]'){
+                    console.log("El alumno no se encuentra registrao");
+                }
+                else 
+                {
+                    console.log($Obj[0]);
+                    let IdRegistro=$Obj[0].IDREGISTRO;
+                    console.log('id registro '+IdRegistro);
+                    console.log('Mostremos el html')
+                    jQuery.ajax({
+                        url:`php/Registro/ActivarAlumno.html`,
+                        success: function name(data) {
+                        var Html=data;
+                        jQuery("#profile").html(`${Html}`);
+                        console.log(IdRegistro)
+                            if (IdRegistro!=null) {
+                                console.log('Actualizar');
+                                jQuery('#IdAlumnoA').val($Obj[0].IDALUMNO);
+                                jQuery('#Nombres').val($Obj[0].NOMBRES + ' ' +$Obj[0].APELLIDOS );
+                                jQuery('#PeriodoA').val($Obj[0].PERIODO);
+                                jQuery('#IdRegistro').val(IdRegistro);
+                                
+                                /*jQuery('#IdAlumno').val();
+                                jQuery('#Nombres').val();
+                                jQuery('#IdCarrera').val();
+                                jQuery('#Periodo').val();*/
+                                ArmarSelect('IdCarrera','carreras_tbl','IDCARRERA','DESCR250','');
+                            }else{
+                                console.log('Registrar');
+                                jQuery('#IdAlumnoA').val($Obj[0].IDALUMNO);
+                                jQuery('#Nombres').val($Obj[0].NOMBRES + ' ' +$Obj[0].APELLIDOS );
+                                //jQuery('#IdCarrera').val();
+                                if ($Obj[0].PERIODO!=null) {
+                                    jQuery('#PeriodoA').val($Obj[0].PERIODO);
+                                }else {
+                                    jQuery('#PeriodoA').val(Periodo);    
+                                }
+                                ArmarSelect('IdCarrera','carreras_tbl','IDCARRERA','DESCR250','');
+                                
+                            }
+                            jQuery('#profile-tab').click()
+                        }
+                    });
+                }
+            //var Html=data;
+            //jQuery("#profile").html(`${Html}`);
+            }
+        });
+
+    }
+         
+
+
+      }
+//ActivarAlumno
+</script>
+
+
+<div class="row">        
+   <div class="container">
+        <div class="col-md-12">
+                  <div id='calendar'></div>
+            </div>       
+   </div>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+<!--modal -->
+
+<div class="modal fade" id="largeModal" tabindex="-1" role="dialog" aria-labelledby="largeModalLabel" aaria-hidden="true" data-backdrop="static">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="largeModalLabel">Registro de Citas</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="ContenidoModal">
+                    <form id="FormularioEnnviar">
+                <div class="row">
+                    <div class="col-xs-6 col-sm-6">
+                        <div class="form-group">
+                                <label class=" form-control-label">Fecha</label>
+                                <div class="input-group">
+                                    <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
+                                    <input class="form-control" id="txtFecha" name="txtFecha" readonly>
+                                </div>
+                                <small class="form-text text-muted">ex. 99/99/9999</small>
+                        </div>
+                        <div class="form-group">
+                                <label class=" form-control-label">Hora Inicio</label>
+                                <div class="input-group">
+                                    <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
+                                    <input class="form-control" id="txtHora" name="txtHora" readonly>
+                                </div>
+                                <small class="form-text text-muted">ex. 99/99/9999</small>
+                        </div>
+                    </div>
+                   
+                        <div class="col-xs-6 col-sm-6">
+                                <div class="form-group">
+                                        <label class=" form-control-label">titulo</label>
+                                        <div class="input-group">
+                                            <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
+                                            <input class="form-control" id="txtTitulo" name="txtTitulo" value="Tomografo 2" >
+                                        </div>
+                                        <small class="form-text text-muted">ex. 99/99/9999</small>
+                                </div>
+                                <div class="form-group">
+                                        <label class=" form-control-label">Hora Fin</label>
+                                        <div class="input-group">
+                                            <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
+                                            <input class="form-control" id="txtHoraFin" name="txtHoraFin" >
+                                        </div>
+                                        <small class="form-text text-muted">ex. 99/99/9999</small>
+                                </div>
+                        </div>
+                   </div>
+                   <hr>
+                   <h5>Datos del Paciente</h5>
+                   <hr>
+                   <div class="row">
+                        <div class="col-xs-6 col-sm-6">
+                                <div class="form-group">
+                                        <label class=" form-control-label">DNI Paciente</label>
+                                        <div class="input-group">
+                                            <div class="input-group-addon" onclick="Paciente()" style="cursor:pointer"><i class="fa fa-search"></i></div>
+                                            <input class="form-control" id="txtDNIPaciente" name="txtDNIPaciente" >
+                                        </div>
+                                        <small class="form-text text-muted">ex. 99/99/9999</small>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class=" form-control-label">Tel. Fijo</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon" onclick="Paciente()" style="cursor:pointer"><i class="fa fa-calendar"></i></div>
+                                        <input class="form-control" id="txtFijo" name="txtFijo" >
+                                    </div>
+                                    <small class="form-text text-muted">ex. 99/99/9999</small>
+                            </div>
+                            <div class="form-group">
+                                    <label class=" form-control-label">Edad</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"  style="cursor:pointer"><i class="fa fa-calendar"></i></div>
+                                        <input class="form-control" id="txtEdad" name="txtEdad" >
+                                    </div>
+                                    <small class="form-text text-muted">ex. 99/99/9999</small>
+                            </div>
+
+                        </div>
+                        <div class="col-xs-6 col-sm-6">
+                                <div class="form-group">
+                                        <label class=" form-control-label">Nombre del Paciente</label>
+                                        <div class="input-group">
+                                            <div class="input-group-addon" ><i class="fa fa-user"></i></div>
+                                            <input class="form-control" id="txtNombrePaciente" name="txtNombrePaciente" >
+                                        </div>
+                                        <small class="form-text text-muted">ex. 99/99/9999</small>
+                                </div>
+                                <div class="form-group">
+                                    <label class=" form-control-label">Celular</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon" onclick="Paciente()" style="cursor:pointer"><i class="fa fa-calendar"></i></div>
+                                        <input class="form-control" id="txtCelular" name="txtCelular" >
+                                    </div>
+                                    <small class="form-text text-muted">ex. 99/99/9999</small>
+                            </div>
+                        </div>
+                   </div>
+                   <hr>
+                   <h5>Datos de Procedimiento</h5>
+                   <hr>
+                   <div class="row">
+                        <div class="col-xs-6 col-sm-6">
+                                <div class="form-group">
+                                        <label class=" form-control-label">Examen</label>
+                                        <div class="input-group">
+                                            <div class="input-group-addon" onclick="Examen()" style="cursor:pointer"><i class="fa fa-search"></i></div>
+                                            <select class="form-control" id="txtCodExamen" name="txtCodExamen" >
+                                            </select>
+                                        </div>
+                                        <small class="form-text text-muted">ex. 99/99/9999</small>
+                                </div>
+                        </div>
+                        <div class="col-xs-6 col-sm-6">
+                                <div class="form-group">
+                                        <label class=" form-control-label">Precio</label>
+                                        <div class="input-group">
+                                            <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
+                                            <input class="form-control" id="txtPrecioExamen" name="txtPrecioExamen" >
+                                        </div>
+                                        <small class="form-text text-muted">ex. 99/99/9999</small>
+                                </div>
+                        </div>
+                   </div>
+                   <hr>
+                   <div class="row">
+                        <!-- <div class="col-xs-6 col-sm-6">
+                                <div class="form-group">
+                                        <label class=" form-control-label">DNI Doctor</label>
+                                        <div class="input-group">
+                                            <div class="input-group-addon" onclick="Doctor()" style="cursor:pointer"><i class="fa fa-search"></i></div>
+                                            <input class="form-control" id="txtDNIDoctor" name="txtDNIDoctor" >
+                                        </div>
+                                        <small class="form-text text-muted">ex. 99/99/9999</small>
+                                </div>
+                        </div> -->
+                        <div class="col-xs-6 col-sm-6">
+                                <div class="form-group">
+                                        <label class=" form-control-label">Nombre de Doctor</label>
+                                        <div class="input-group">
+                                            <div class="input-group-addon"><i class="fa fa-user"></i></div>
+                                            <input class="form-control" id="txtNombreDoctor" name="txtNombreDoctor" >
+                                        </div>
+                                        <small class="form-text text-muted">ex. 99/99/9999</small>
+                                </div>
+                        </div>
+                        <div class="col-xs-6 col-sm-6">
+                                <div class="form-group">
+                                        <label class=" form-control-label">Hospital</label>
+                                        <div class="input-group">
+                                            <div class="input-group-addon" onclick="Doctor()" style="cursor:pointer"><i class="fa fa-calendar"></i></div>
+                                            <input class="form-control" id="txtHospital" name="txtHospital" >
+                                        </div>
+                                        
+                                </div>
+                        </div>  
+                   </div>
+                 <textarea type="text" id="txtDescripcion" row='3' name="txtDescripcion"  style="display: none"></textarea><br>
+                    <input type="color" id="color" value="#158aea" style="display: none">
+                
+                    <div class="row">
+                           
+                    </div>
+                    <div class="row">
+                            <div class="col-xs-12 col-sm-12">
+                            <div class="form-group">
+                                    <label class=" form-control-label">Observaciones</label>
+                                    <div class="input-group">
+                                        <textarea class="form-control" id="txtObservaciones" name="txtObservaciones" row='3'></textarea>
+                                    </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                
+                </div>
+            </form>
+                <div class="modal-footer">
+                    <input type="text" id='IdCruceTemporal' style="display: none">
+                    <input type="text" id="IdCita" style="display: none">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="EliminaCruce();">Cancelar</button>
+                    <button type="button" class="btn btn-primary" id='Actualiza' style="display:none" onclick="Actualiza()">Actualizar</button>
+                    <button type="button" class="btn btn-primary" id='CrearNuevo'>Guardar</button>
+                    <!--onclick="Enviar();"-->
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        
+        jQuery('#CrearNuevo').click(()=> {
+            //Guardar Cita 
+            /*INSERT INTO `citas_tbl`(`IDCITA`, `FECHACITA`, 
+            `HORACITA`, `FECHAHORA`, `DNI_PACIENTE`, `NOMBRE_PACIENTE`, `TELEFONO_PACIENTE`, 
+            `CELULAR_PACIENTE`, `IDEXAMEN`, `NOMBRE_EXAMEN`, `PRECIO_EXAMEN`, `MEDICO_ENVIA`, 
+            `HOSPITAL`, `OBSERVACIONES`,`DATE_CREATE`, `USER_CREATE`, 
+            `DATE_UPDATE`, `USER_UPDATE`) VALUES ([value-1],[value-2],
+            [value-3],[value-4],[value-5],[value-6],[value-7],[value-8],[value-9],[value-10],[value-11],
+            [value-12],[value-13],[value-14],[value-15],[value-16],[value-17],[value-18])
+            */
+            var Datos=jQuery('#FormularioEnnviar').serialize();
+            Datos=Datos+'&Peticion=TomoGrafo2Insert';
+            jQuery.ajax({
+                url:`php/Controlador/CitasC.php`,
+                type: 'POST',
+                data :Datos,
+                success: (data)=> {
+                            console.log(data);
+                            jQuery('#largeModal').modal('hide');
+                            
+                            var NuevoEvento={
+                                    title:jQuery('#txtTitulo').val() +'\n'+'Doctor:'+jQuery('#txtNombreDoctor').val(),
+                                    start:jQuery('#txtFecha').val()+"T"+jQuery('#txtHora').val(),
+                                    end: jQuery('#txtFecha').val()+"T"+jQuery('#txtHoraFin').val(),
+                                    color:jQuery('#color').val(),
+                                    description:'asdasd',
+                                    textColor:'#FFFFFF',
+                                    id:data,
+                                    }
+                                    calendar.addEvent(NuevoEvento)
+                                    console.log(NuevoEvento)
+                            }
+            });
+
+
+           
+            
+            
+
+
+        })
+        Paciente=()=>{
+            jQuery.ajax({
+            url:`php/Controlador/PacienteC.php`,
+            type: 'POST',
+            data : {'Peticion':'BuscarPaciente','IdPaciente':jQuery('#txtDNIPaciente').val()},
+            success: (data)=> {
+                                console.log(data);
+                            $Obj=JSON.parse(data);
+                            console.log($Obj);
+                            console.log($Obj[0]['NOMBREPACIENTE'])                            
+                            jQuery('#txtNombrePaciente').val($Obj[0]['NOMBREPACIENTE']);
+                            }
+            });
+        }
+        Examen=()=>{
+            console.log('buscar Examen')
+            jQuery.ajax({
+            url:`php/Controlador/ExamenC.php`,
+            type: 'POST',
+            data : {'Peticion':'BuscarExamen','IdExamen':jQuery('#txtCodExamen').val()},
+            success: (data)=> {
+                                console.log(data);
+                            $Obj=JSON.parse(data);
+                            console.log($Obj);
+                            console.log($Obj[0]['NOMBRE_EXAMEN'])                            
+                            jQuery('#txtNombreExamen').val($Obj[0]['NOMBRE_EXAMEN']);
+                            //SELECT NOMBRE_EXAMEN FROM `examenes_tbl` where ID_EXAMEN='EXA1'
+                            }
+            });
+             
+        }
+        
+        Doctor=()=>{
+            //txtDNIDoctor txtNombreDoctor
+            console.log('buscar Doctor')
+        
+            jQuery.ajax({
+            url:`php/Controlador/DoctorC.php`,
+            type: 'POST',
+            data : {'Peticion':'BuscarDoctores','IdDoctor':jQuery('#txtDNIDoctor').val()},
+            success: (data)=> {
+                                console.log(data);
+                            $Obj=JSON.parse(data);
+                            console.log($Obj);
+                            console.log($Obj[0]['NOMBREDOCTOR'])                            
+                            jQuery('#txtNombreDoctor').val($Obj[0]['NOMBREDOCTOR']);
+                            //SELECT NOMBRE_EXAMEN FROM `examenes_tbl` where ID_EXAMEN='EXA1'
+                            }
+            });
+        }
+
+        sumar30min=(Date)=>{
+                
+                var fecha = Date;
+                fecha.setMinutes(fecha.getMinutes() + 30);
+                //var rr= fecha.setMinutes(fecha.getMinutes() + 5);
+                //console.log(fecha.getHours())
+                //console.log(fecha.getMinutes())
+                hora=fecha.getHours();
+                minutos=fecha.getMinutes();
+                if(hora<10){hora='0'+hora}
+                if(minutos<10){minutos='0'+minutos}
+                
+                // if(fecha.getHours()>10){
+                //     return '0'+fecha.getHours()+':'+fecha.getMinutes();   
+                // }else{
+                //     return fecha.getHours()+':'+fecha.getMinutes();
+                // }
+                return  hora+':'+minutos;   
+        }
+
+
+        BuscaCruce=(Fecha,Hora)=>{
+            jQuery.ajax({
+            url:`php/Controlador/CitasC.php`,
+            type: 'POST',
+            data : {'Peticion':'ValidaCruce','Fecha':Fecha,'Hora':Hora,'IdTomografo':'2'},
+            success: (data)=> {
+                        $ObjCurce=JSON.parse(data);
+                        console.log($ObjCurce);
+                        if ($ObjCurce['Respuesta']=='Con Cruce')
+                        {
+                            alert('Presenta Cruce Actualmente')
+                            jQuery('#IdCruceTemporal').val('NO')
+                        }
+                    else{
+                        jQuery('#IdCruceTemporal').val($ObjCurce['Respuesta'])
+                        jQuery('#largeModal').modal();
+                                    jQuery('#CrearNuevo').css('display','');
+                                    jQuery('#Actualiza').css('display','none');
+                        }
+
+                        
+                    }
+            });
+
+        }
+        
+        EliminaCruce=(Fecha,Hora)=>{
+            var IdTemporal=jQuery('#IdCruceTemporal').val();
+            if (IdTemporal=='NO') {
+                console.log('Esta Actualizando');
+            }
+            else 
+            {
+                jQuery.ajax({
+                url:`php/Controlador/CitasC.php`,
+                type: 'POST',
+                data : {'Peticion':'EliminaTemporal','IdTemporal':IdTemporal},
+                success: (data)=> {
+                                    console.log(data);
+                                }
+                });
+            }
+            
+        }
+        jQuery('#txtCodExamen').change(()=> {
+                //Buscamos el precio par pintarlo
+                let IdExamen=jQuery('#txtCodExamen').val();
+
+                jQuery.ajax({
+                url:`php/Controlador/CitasC.php`,
+                type: 'POST',
+                data : {'Peticion':'BuscarPrecio','IdExamen':IdExamen},
+                success: (data)=> {
+                                    ObjPrecio=JSON.parse(data)
+                                    console.log(ObjPrecio);
+                                    console.log(ObjPrecio[0]['PRECIO']);
+                                    jQuery('#txtPrecioExamen').val(ObjPrecio[0]['PRECIO']);
+                                }
+                });
+                 
+         })
+        
+        RecuperarDatos=(IdCita)=>{
+            jQuery.ajax({
+                url:`php/Controlador/CitasC.php`,
+                type: 'POST',
+                data : {'Peticion':'TrarCita','IdCita':IdCita},
+                success: (data)=> {
+                                    ObjCita=JSON.parse(data)
+                                    console.log(ObjCita)
+                                    console.log(ObjCita[0]);
+                                    ArmarSelect('txtCodExamen','examenes_tbl','ID_EXAMEN','NOMBRE_EXAMEN','')
+                                    jQuery('#txtFecha').val(ObjCita[0]['FECHACITA']);
+                                    jQuery('#txtHora').val(ObjCita[0]['HORACITA']);
+                                    jQuery('#txtTitulo').val('Tomografo '+ ObjCita[0]['IDTOMOGRAFO']);
+                                    jQuery('#txtHoraFin').val(ObjCita[0]['HORAFIN']);
+
+                                    jQuery('#txtDNIPaciente').val(ObjCita[0]['DNI_PACIENTE']);
+                                    jQuery('#txtFijo').val(ObjCita[0]['TELEFONO_PACIENTE']);
+                                    jQuery('#txtNombrePaciente').val(ObjCita[0]['NOMBRE_PACIENTE']);
+                                    jQuery('#txtCelular').val(ObjCita[0]['CELULAR_PACIENTE']);
+                                    jQuery('#txtEdad').val(ObjCita[0]['EDAD']);
+                                    setTimeout(function(){ jQuery('#txtCodExamen').val(ObjCita[0]['IDEXAMEN']); }, 1000);
+                                    
+
+                                    jQuery('#txtPrecioExamen').val(ObjCita[0]['PRECIO_EXAMEN'])
+                                    jQuery('#txtNombreDoctor').val(ObjCita[0]['MEDICO_ENVIA'])
+                                    jQuery('#txtHospital').val(ObjCita[0]['HOSPITAL'])
+                                    jQuery('#txtObservaciones').val(ObjCita[0]['OBSERVACIONES'])
+                                    
+                                    jQuery('#IdCita').val(IdCita);
+                                    
+                                    jQuery('#CrearNuevo').css('display','none');
+                                    jQuery('#Actualiza').css('display','');
+                                    jQuery('#IdCruceTemporal').val('NO')
+                                    jQuery('#largeModal').modal('show')
+                                    // COLOR: "#158aea"
+                                    // DATE_CREATE: "2019-09-16 14:54:40"
+                                    // DATE_UPDATE: null
+                                    
+                                    
+                                    // IDCITA: "5"
+                                    // IDEXAMEN: "EXA1"
+                                    // IDTOMOGRAFO: "1"
+                                    
+                                    
+                                    
+                                    
+                                    // USER_CREATE: "USUARIO1"
+                                    
+                                }
+                });
+        }
+
+        Actualiza=()=>{
+            let Datos=jQuery('#FormularioEnnviar').serialize();
+            Datos=Datos+'&Peticion=ActualizaCita&IdCita='+jQuery('#IdCita').val();
+            jQuery.ajax({
+                url:`php/Controlador/CitasC.php`,
+                type: 'POST',
+                data :Datos,
+                success: (data)=> {
+                            console.log(data);
+                            jQuery('#largeModal').modal('hide');
+                            jQuery('#ClickTomografo').click();
+                            jQuery('.modal-backdrop').remove()
+                            // var NuevoEvento={
+                            //         title:jQuery('#txtTitulo').val() +'\n'+'Doctor:'+jQuery('#txtNombreDoctor').val(),
+                            //         start:jQuery('#txtFecha').val()+"T"+jQuery('#txtHora').val(),
+                            //         end: jQuery('#txtFecha').val()+"T"+jQuery('#txtHoraFin').val(),
+                            //         color:jQuery('#color').val(),
+                            //         description:'asdasd',
+                            //         textColor:'#FFFFFF',
+                            //         id:data,
+                            //         }
+                            //         calendar.addEvent(NuevoEvento)
+                            //         console.log(NuevoEvento)
+                            }
+            });
+
+        }
+    </script>
