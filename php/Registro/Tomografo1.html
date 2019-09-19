@@ -372,13 +372,23 @@ ModalAgregarDocente=()=>{
                                         </div>
                                         <small class="form-text text-muted">ex. 99/99/9999</small>
                                 </div>
+
+                                <div class="form-group">
+                                    <label class=" form-control-label">Precio Nuevo</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
+                                        <input class="form-control" id="txtPrecioExamen2" name="txtPrecioExamen2" >
+                                    </div>
+                                    <small class="form-text text-muted">ex. 99/99/9999</small>
+                            </div>
+
                         </div>
                         <div class="col-xs-6 col-sm-6">
                                 <div class="form-group">
                                         <label class=" form-control-label">Precio</label>
                                         <div class="input-group">
                                             <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
-                                            <input class="form-control" id="txtPrecioExamen" name="txtPrecioExamen" >
+                                            <input class="form-control" id="txtPrecioExamen" name="txtPrecioExamen" readonly>
                                         </div>
                                         <small class="form-text text-muted">ex. 99/99/9999</small>
                                 </div>
@@ -632,7 +642,18 @@ ModalAgregarDocente=()=>{
                 type: 'POST',
                 data : {'Peticion':'TrarCita','IdCita':IdCita},
                 success: (data)=> {
-                                    ObjCita=JSON.parse(data)
+                        //Hacer otro ajax para validar el usuario si es admin
+                        ObjCita=JSON.parse(data)
+                        jQuery.ajax({
+                            url:'php/Config/Control.php',
+                            type: 'POST',
+                            data : {'Control':'TraerTipoUsuario'},
+                            success:(respon)=>{
+                                console.log(respon)
+                                $ObjetoValida=JSON.parse(respon);
+                                console.log($ObjetoValida);
+                                if ($ObjetoValida[0]['TIPO_USUARIO']=='ADMIN') {
+                                    
                                     console.log(ObjCita)
                                     console.log(ObjCita[0]);
                                     ArmarSelect('txtCodExamen','examenes_tbl','ID_EXAMEN','NOMBRE_EXAMEN','')
@@ -657,26 +678,62 @@ ModalAgregarDocente=()=>{
                                     jQuery('#txtNombreDoctor').val(ObjCita[0]['MEDICO_ENVIA'])
                                     jQuery('#txtHospital').val(ObjCita[0]['HOSPITAL'])
                                     jQuery('#txtObservaciones').val(ObjCita[0]['OBSERVACIONES'])
-                                    
+                                    jQuery('#txtPrecioExamen2').val(ObjCita[0]['PRECIO2'])
                                     jQuery('#IdCita').val(IdCita);
                                     
                                     jQuery('#CrearNuevo').css('display','none');
                                     jQuery('#Actualiza').css('display','');
                                     jQuery('#IdCruceTemporal').val('NO')
                                     jQuery('#largeModal').modal('show')
-                                    // COLOR: "#158aea"
-                                    // DATE_CREATE: "2019-09-16 14:54:40"
-                                    // DATE_UPDATE: null
-                                    
-                                    
-                                    // IDCITA: "5"
-                                    // IDEXAMEN: "EXA1"
-                                    // IDTOMOGRAFO: "1"
-                                    
-                                    
-                                    
-                                    
                                     // USER_CREATE: "USUARIO1"
+                                }
+                                else{
+                                    console.log('comparar usuarios')
+                                    if($ObjetoValida[0]['NOMBRE']==ObjCita[0]['USER_CREATE'])
+                                    {
+                                        console.log(ObjCita)
+                                        console.log(ObjCita[0]);
+                                        ArmarSelect('txtCodExamen','examenes_tbl','ID_EXAMEN','NOMBRE_EXAMEN','')
+                                        jQuery('#txtFecha').val(ObjCita[0]['FECHACITA']);
+                                        jQuery('#txtHora').val(ObjCita[0]['HORACITA']);
+                                        jQuery('#txtTitulo').val(ObjCita[0]['Titulo']);
+                                        jQuery('#txtHoraFin').val(ObjCita[0]['HORAFIN']);
+                                    
+                                        jQuery('#txtDNIPaciente').val(ObjCita[0]['DNI_PACIENTE']);
+                                        jQuery('#txtFijo').val(ObjCita[0]['TELEFONO_PACIENTE']);
+                                        jQuery('#txtNombrePaciente').val(ObjCita[0]['NOMBRE_PACIENTE']);
+                                        jQuery('#txtCelular').val(ObjCita[0]['CELULAR_PACIENTE']);
+                                        
+                                        
+                                        jQuery('#txtEdad').val(ObjCita[0]['EDAD']);
+
+                                        
+                                        
+                                        setTimeout(function(){ jQuery('#txtCodExamen').val(ObjCita[0]['IDEXAMEN']); }, 1000);
+
+                                        jQuery('#txtPrecioExamen').val(ObjCita[0]['PRECIO_EXAMEN'])
+                                        jQuery('#txtNombreDoctor').val(ObjCita[0]['MEDICO_ENVIA'])
+                                        jQuery('#txtHospital').val(ObjCita[0]['HOSPITAL'])
+                                        jQuery('#txtObservaciones').val(ObjCita[0]['OBSERVACIONES'])
+                                        jQuery('#txtPrecioExamen2').val(ObjCita[0]['PRECIO2'])
+                                        jQuery('#IdCita').val(IdCita);
+                                        
+                                        jQuery('#CrearNuevo').css('display','none');
+                                        jQuery('#Actualiza').css('display','');
+                                        jQuery('#IdCruceTemporal').val('NO')
+                                        jQuery('#largeModal').modal('show')
+                                        // USER_CREATE: "USUARIO1"
+                                    }
+                                    else{
+                                        swal(' No puedes Actualizar')
+                                    }
+                                }
+                                
+                            }
+                        });
+                    
+
+                                   
                                     
                                 }
                 });

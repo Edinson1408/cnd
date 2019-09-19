@@ -33,6 +33,7 @@ class Reporte extends Conexion
                             <td>".$row['CELULAR_PACIENTE']."</td>
                             <td>".$row['NOMBRE_EXAMEN']."</td> 
                             <td>".$row['PRECIO_EXAMEN']."</td> 
+                            <td>".$row['PRECIO2']."</td> 
                             <td>".$row['MEDICO_ENVIA']."</td> 
                             <td>".$row['HOSPITAL']."</td>         
                             <td>".$row['OBSERVACIONES']."</td> 
@@ -60,7 +61,7 @@ $Tabla=$oje->ReporteTomografos($IdTomografo,$f1,$f2);
         <td style="background-color: green;color:white;" rowspan="2">Hora I.</td> 
         <td style="background-color: green;color:white;" rowspan="2">Hora F.</td> 
         <td colspan="5" style='text-align: center;'>Datos del Paciente</td>
-        <td colspan="4" style='text-align: center;'>Datos de Procedimientos</td>
+        <td colspan="5" style='text-align: center;'>Datos de Procedimientos</td>
         <td rowspan="2">Observaciones</td> 
     </tr>
     <tr> 
@@ -71,6 +72,7 @@ $Tabla=$oje->ReporteTomografos($IdTomografo,$f1,$f2);
         <td >CELULAR</td>
         <td>EXAMEN</td> 
         <td>PRECIO</td> 
+        <td>PRECIO FINAL</td> 
         <td>MEDICO</td> 
         <td>HOSPITAL</td>         
     </tr>
