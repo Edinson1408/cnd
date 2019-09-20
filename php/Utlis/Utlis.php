@@ -27,6 +27,13 @@ class UtlisM extends Conexion
          
         
     }
+
+    public function VerSessiones(){
+        
+        $Sql="SELECT * FROM usuarios_tbl WHERE NOMBRE='".$_SESSION['USUARIO']."' ";
+        $Query=$this->SelectArray($Sql);
+        echo $Query;
+    }
 }
 
 $Objeto= new UtlisM();
@@ -40,7 +47,8 @@ switch ($_POST['Peticion']) {
         echo $selec;
         break;
     case 'VerSessiones':
-        echo $_SESSION['USUARIO'];
+        //echo $_SESSION['USUARIO'];
+        $Objeto->VerSessiones($_POST);
         break;
     case 'CambiarContrasena':
         $Objeto->CambiarContrasena($_POST);

@@ -10,7 +10,7 @@ class Control extends Conexion
         //echo $Pass;
         
         
-        $Sql="SELECT NOMBRE FROM `usuarios_tbl` WHERE NOMBRE='$User' AND CONTRASENA='$Pass' ";
+        $Sql="SELECT * FROM `usuarios_tbl` WHERE NOMBRE='$User' AND CONTRASENA='$Pass' ";
         $Array=$this->SelectArray($Sql);
         echo $Array;
         if ($Array=='[]')

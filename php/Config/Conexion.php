@@ -13,7 +13,7 @@ class Conexion
     
     }
     private function Conexion(){
-        $con = mysqli_connect("localhost","root","1234","cnd");
+        $con = mysqli_connect("localhost","root","1234","cdn");
         $this->Conexion=$con;
     }
 

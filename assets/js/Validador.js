@@ -65,12 +65,42 @@ ValidaSession=()=>{
                method:'POST',
                data : {'Peticion':'VerSessiones'},
                success:(data)=>{
+                   //console.log(data);
+                   $Objeto=JSON.parse(data);
+                   //console.log($Objeto)
                    $Usuario=data.trim();
                    console.log($Usuario.indexOf('Notice</b>:  Undefined index: USUARIO'))
                    if ($Usuario.indexOf('Notice</b>:  Undefined index: USUARIO')>0) {
+                    console.log('')
                     window.location.replace("index.html");
                     
                    }else{
+                       if($Usuario==''){
+                        window.location.replace("index.html");
+                       }
+                       else {
+                           
+                           if ($Objeto[0]['ESTADO']=='A') {
+                               //TODO ESTA BIEN
+                               $NOMBREUSUARIO=$Objeto[0]['PRIMER_NOMBRE']+$Objeto[0]['SEGUNDO_NOMBRE']+$Objeto[0]['APELLIDOS'];
+                               jQuery('#NombreUsuario').html($NOMBREUSUARIO);
+                               //VALIDANDO SI ES ADMIN
+                               console.log($Objeto[0]['TIPO_USUARIO']);
+                             if ($Objeto[0]['TIPO_USUARIO']=='ADMIN') {
+                                 
+                             }else{
+                                jQuery('#MenuReporte').html(' ')
+                             }
+                             //TIPO_USUARIO: "ADMIN"
+                               
+                               
+                               
+                                
+
+                           }else{
+                            window.location.replace("index.html");
+                           }
+                       }
                        
                    }
                }

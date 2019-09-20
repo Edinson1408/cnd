@@ -37,8 +37,8 @@ var calendar = new FullCalendar.Calendar(calendarEl, {
     axisFormat: 'HH:mm ',
 			timeFormat: 'HH:mm ', // uppercase H for 24-hour clock
 			agenda: 'HH:mm ', // 5:00 - 6:30
-    minTime: '01:00',
-			maxTime: '24:00',
+    minTime: '08:00',
+			maxTime: '23:00',
             allDaySlot: false,
 
   plugins: [ 'interaction', 'dayGrid', 'timeGrid', 'list' ],
@@ -259,7 +259,7 @@ ModalAgregarDocente=()=>{
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title" id="largeModalLabel">Registro de Citas</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="EliminaCruce();">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>

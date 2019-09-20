@@ -40,7 +40,7 @@
                 <div class="login-logo">
                     <a href="index.html">
                         <!-- <img class="align-content" src="images/logo.png" alt=""> -->
-                        <h2 class="align-content">Centro Neurologico Digital</h2>
+                        <h2 class="align-content">Resonancia Salaverry</h2>
                     </a>
                 </div>
                 <div class="login-form">
@@ -95,8 +95,8 @@
             document.getElementById("ACCEDER").onclick = ()=>{
                 var User=document.getElementById('Usuario').value;
                 var Pass=document.getElementById('Password').value;
-                console.log(User);
-                console.log(Pass);
+                //console.log(User);
+                //console.log(Pass);
                 if (User=='admin' && Pass=='admin')
                 {
                     //window.location.replace("intranet.html");
@@ -115,7 +115,14 @@
                             alert('usuario o contraseña errada')
                         }
                         else {
-                           window.location.replace("intranet.html");
+                            $Objeto=JSON.parse(data);
+                            console.log($Objeto);
+                            if ($Objeto[0]['ESTADO']=='A') {
+                            window.location.replace("intranet.html");     
+                            }else{
+                                alert('El Usuario no se Encuentra Activo');
+                            }
+                           
                             
                         }
                         
