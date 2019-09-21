@@ -290,7 +290,7 @@ ModalAgregarDocente=()=>{
                                         <label class=" form-control-label">titulo</label>
                                         <div class="input-group">
                                             <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
-                                            <input class="form-control" id="txtTitulo" name="txtTitulo" value="Tomografo 2" >
+                                            <input class="form-control" id="txtTitulo" name="txtTitulo" value="Resonador 2" >
                                         </div>
                                         <small class="form-text text-muted">ex. 99/99/9999</small>
                                 </div>
@@ -477,7 +477,7 @@ ModalAgregarDocente=()=>{
                             jQuery('#largeModal').modal('hide');
                             
                             var NuevoEvento={
-                                    title:jQuery('#txtTitulo').val() +'\n'+'Doctor:'+jQuery('#txtNombreDoctor').val(),
+                                    title:jQuery('#txtNombrePaciente').val() +'\n'+'Doctor:'+jQuery('#txtNombreDoctor').val(),
                                     start:jQuery('#txtFecha').val()+"T"+jQuery('#txtHora').val(),
                                     end: jQuery('#txtFecha').val()+"T"+jQuery('#txtHoraFin').val(),
                                     color:jQuery('#color').val(),

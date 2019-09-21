@@ -37,10 +37,13 @@ jQuery.ajax({
                method:'POST',
                data : {'Peticion':'VerSessiones'},
                success:(data)=>{
+                    $ObjetoUsuario=JSON.parse(data);
                    $Usuario=data.trim();
                    console.log($Usuario);
-                   jQuery('#Usuario').val($Usuario);
+                   jQuery('#Usuario').val($ObjetoUsuario[0]['NOMBRE']);
+                   
                    if ($Usuario=='') {
+                       
                     //window.location.replace("index.html");
                     
                    }else{

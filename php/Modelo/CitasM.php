@@ -88,7 +88,7 @@ class CitasM extends Conexion
     }
 
     public function VerTodasCitas($POST){
-        $SQL="SELECT Titulo as title ,
+        $SQL="SELECT NOMBRE_PACIENTE as title ,
                 CONCAT(FECHACITA,'T',HORACITA) AS start, CONCAT(FECHACITA,'T',HORAFIN) AS end,
                 COLOR AS color,'#FFFFFF' AS textColor , IDCITA AS id
                 
