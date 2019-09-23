@@ -24,7 +24,7 @@ class CitasM extends Conexion
         ('1','".$POST['txtFecha']."','".$POST['txtHora']."','".$POST['txtHoraFin']."','".$POST['txtDNIPaciente']."',
         '".$POST['txtNombrePaciente']."','".$POST['txtFijo']."','".$POST['txtCelular']."','".$POST['txtCodExamen']."','".$POST['txtPrecioExamen']."',
         '".$POST['txtNombreDoctor']."','".$POST['txtHospital']."','".$POST['txtObservaciones']."',
-        '". $rr."','$Usuario','#158aea','".$POST['txtTitulo']."','".$POST['txtEdad']."','".$POST['txtPrecioExamen2']."');
+        sysdate(),'".$Usuario."','#158aea','".$POST['txtTitulo']."','".$POST['txtEdad']."','".$POST['txtPrecioExamen2']."');
         ";
         $this->Query($Sql);
         echo  mysqli_insert_id($this->Conexion);
@@ -50,7 +50,7 @@ class CitasM extends Conexion
         ('2','".$POST['txtFecha']."','".$POST['txtHora']."','".$POST['txtHoraFin']."','".$POST['txtDNIPaciente']."',
         '".$POST['txtNombrePaciente']."','".$POST['txtFijo']."','".$POST['txtCelular']."','".$POST['txtCodExamen']."','".$POST['txtPrecioExamen']."',
         '".$POST['txtNombreDoctor']."','".$POST['txtHospital']."','".$POST['txtObservaciones']."',
-        '". $rr."','$Usuario','#158aea','".$POST['txtTitulo']."','".$POST['txtEdad']."','".$POST['txtPrecioExamen2']."');
+        sysdate(),'".$Usuario."','#158aea','".$POST['txtTitulo']."','".$POST['txtEdad']."','".$POST['txtPrecioExamen2']."');
         ";
         $this->Query($Sql);
         echo  mysqli_insert_id($this->Conexion);
@@ -100,6 +100,8 @@ class CitasM extends Conexion
     }
 
     public function UpdateCita($POST){
+
+        $Usuario=$_SESSION['USUARIO'];
         $Sql= "UPDATE  `citas_tbl` SET  
                         FECHACITA='".$POST['txtFecha']."',
                         HORACITA='".$POST['txtHora']."',
@@ -115,7 +117,9 @@ class CitasM extends Conexion
                         OBSERVACIONES='".$POST['txtObservaciones']."',
                         Titulo='".$POST['txtTitulo']."',
                         `EDAD`='".$POST['txtEdad']."',
-                        PRECIO2='".$POST['txtPrecioExamen2']."'
+                        PRECIO2='".$POST['txtPrecioExamen2']."',
+                        DATE_UPDATE=sysdate(),
+                        USER_UPDATE='".$Usuario."'
                         WHERE IDCITA='".$POST['IdCita']."' ";
         $this->Query($Sql);
     }
