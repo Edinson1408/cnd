@@ -47,7 +47,7 @@ var calendar = new FullCalendar.Calendar(calendarEl, {
     center: 'title',
     right: 'dayGridMonth,timeGridWeek,timeGridDay,listMonth'
   },
-  defaultDate: '2019-09-16',
+  defaultDate: FechaActual,
   navLinks: true, // can click day/week names to navigate views
   businessHours: true, // display business hours
   
@@ -447,6 +447,7 @@ ModalAgregarDocente=()=>{
                     <input type="text" id='IdCruceTemporal' style="display: none">
                     <input type="text" id="IdCita" style="display: none">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="EliminaCruce();">Cancelar</button>
+                    <button type="button" class="btn btn-danger" id='Eliminar' style="display:none" onclick="Eliminar()">Eliminar</button>
                     <button type="button" class="btn btn-primary" id='Actualiza' style="display:none" onclick="Actualiza()">Actualizar</button>
                     <button type="button" class="btn btn-primary" id='CrearNuevo'>Guardar</button>
                     <!--onclick="Enviar();"-->
@@ -587,6 +588,7 @@ ModalAgregarDocente=()=>{
                         jQuery('#largeModal').modal();
                                     jQuery('#CrearNuevo').css('display','');
                                     jQuery('#Actualiza').css('display','none');
+                                    jQuery('#Eliminar').css('display','none');
                         }
 
                         
@@ -675,6 +677,7 @@ ModalAgregarDocente=()=>{
                                     
                                     jQuery('#CrearNuevo').css('display','none');
                                     jQuery('#Actualiza').css('display','');
+                                    jQuery('#Eliminar').css('display','');
                                     jQuery('#IdCruceTemporal').val('NO')
                                     jQuery('#largeModal').modal('show')
                                 }
@@ -707,6 +710,7 @@ ModalAgregarDocente=()=>{
                                         
                                         jQuery('#CrearNuevo').css('display','none');
                                         jQuery('#Actualiza').css('display','');
+                                        jQuery('#Eliminar').css('display','');
                                         jQuery('#IdCruceTemporal').val('NO')
                                         jQuery('#largeModal').modal('show')
                                     }
@@ -748,6 +752,26 @@ ModalAgregarDocente=()=>{
                             //         }
                             //         calendar.addEvent(NuevoEvento)
                             //         console.log(NuevoEvento)
+                            }
+            });
+
+        }
+
+
+        Eliminar=()=>{
+            
+
+            jQuery.ajax({
+                url:`php/Controlador/CitasC.php`,
+                type: 'POST',
+                data :{'Peticion':'Eliminar','IdCita':jQuery('#IdCita').val(),'Fecha':jQuery('#txtFecha').val(),'IdTomografo':'2','Hora':jQuery('#txtHora').val()},
+                success: (data)=> {
+                            console.log(data);
+                            //calendar.render();
+                            jQuery('#largeModal').modal('hide');
+                            jQuery('#ClickTomografo').click()
+                            jQuery('.modal-backdrop').remove();
+                            
                             }
             });
 

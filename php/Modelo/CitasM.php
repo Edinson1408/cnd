@@ -123,6 +123,17 @@ class CitasM extends Conexion
                         WHERE IDCITA='".$POST['IdCita']."' ";
         $this->Query($Sql);
     }
+
+    public function EliminaCita($POST){
+        $Sql1="DELETE FROM citas_tbl WHERE IDCITA='".$POST['IdCita']."'";
+        $Sql2="DELETE FROM cita_temporal WHERE FECHA='".$POST['Fecha']."' 
+        AND IDTOMOGRAFO='".$POST['IdTomografo']."' AND HORA='".$POST['Hora']."' ";
+
+        $this->Query($Sql1);
+        $this->Query($Sql2);
+    
+    
+    }
 }
 
 ?>

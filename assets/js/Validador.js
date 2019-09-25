@@ -110,3 +110,12 @@ ValidaSession=()=>{
    
    }
    ValidaSession();
+
+
+
+   //Fecha actual
+   var ACtualidad = new Date();
+var MesActual=ACtualidad.getMonth();
+if(MesActual<10){MesActual='0'+MesActual}
+var FechaActual=ACtualidad.getFullYear()+'-'+MesActual+'-'+ACtualidad.getDate();
+console.log(FechaActual)

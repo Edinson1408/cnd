@@ -48,6 +48,7 @@ require '../Modelo/CitasM.php';
     public function ActualizaCita($POST){
             $this->UpdateCita($POST);
     }
+    
 }
 
 $Obje=new CitasC();
@@ -84,7 +85,9 @@ switch ($_REQUEST['Peticion']) {
         $vita=$Obje->AgregarTomografo2($_POST);
         echo $vita;
         break;
-
+    case 'Eliminar':
+        $vita=$Obje->EliminaCita($_POST);
+        break;
     default:
         # code...
         break;
