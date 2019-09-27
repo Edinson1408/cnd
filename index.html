@@ -44,7 +44,7 @@
                     </a>
                 </div>
                 <div class="login-form">
-                    <form>
+                    <form id="login">
                         <div class="form-group">
                             <label>Usuario</label>
                             <input type="text" class="form-control" placeholder="Email" id="Usuario">
@@ -62,7 +62,7 @@
                             </label>
 
                                 </div> -->
-                                <a type="submit" id="ACCEDER" class="btn btn-success btn-flat m-b-30 m-t-30">Ingresar</a>
+                                <Input  type="submit" id="ACCEDER" value="Ingresar" class="btn btn-success btn-flat m-b-30 m-t-30">
                                 <!-- <div class="social-login-content">
                                     <div class="social-button">
                                         <button type="button" class="btn social facebook btn-flat btn-addon mb-3"><i class="ti-facebook"></i>Sign in with facebook</button>
@@ -88,11 +88,14 @@
 </html>
 
 <script>
+
+
+
+
         window.onload = function(){
             
-           
-            //Asignar la función externa al elemento con id=cerdo.
-            document.getElementById("ACCEDER").onclick = ()=>{
+            document.getElementById("login").addEventListener("submit", function(event){
+                event.preventDefault();
                 var User=document.getElementById('Usuario').value;
                 var Pass=document.getElementById('Password').value;
                 //console.log(User);
@@ -125,12 +128,55 @@
                            
                             
                         }
+
+                    }
+                });
+            
+                
+            
+    });
+ }
+
+        //     //Asignar la función externa al elemento con id=cerdo.
+        //     document.getElementById("ACCEDER").onclick = ()=>{
+        //         var User=document.getElementById('Usuario').value;
+        //         var Pass=document.getElementById('Password').value;
+        //         //console.log(User);
+        //         //console.log(Pass);
+        //         if (User=='admin' && Pass=='admin')
+        //         {
+        //             //window.location.replace("intranet.html");
+        //         }
+        //         else{
+        //             //alert('Usuario o Contraseña Incorrecta')
+        //         }
+                
+        //         jQuery.ajax({
+        //             url:`php/Config/Control.php`,
+        //             method:'POST',
+        //             data : {'Control':'Login','User':User,'Pass':Pass},
+        //             success:(data)=>{
+        //                 //console.log(data);
+        //                 if (data=='[]'){
+        //                     alert('usuario o contraseña errada')
+        //                 }
+        //                 else {
+        //                     $Objeto=JSON.parse(data);
+        //                     console.log($Objeto);
+        //                     if ($Objeto[0]['ESTADO']=='A') {
+        //                     window.location.replace("intranet.html");     
+        //                     }else{
+        //                         alert('El Usuario no se Encuentra Activo');
+        //                     }
+                           
+                            
+        //                 }
                         
         
         
-                    }
-                });
-            };
-        }
+        //             }
+        //         });
+        //     };
+        // }
         
         </script>
