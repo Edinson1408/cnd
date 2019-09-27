@@ -24,7 +24,7 @@ class CitasM extends Conexion
         ('1','".$POST['txtFecha']."','".$POST['txtHora']."','".$POST['txtHoraFin']."','".$POST['txtDNIPaciente']."',
         '".$POST['txtNombrePaciente']."','".$POST['txtFijo']."','".$POST['txtCelular']."','".$POST['txtCodExamen']."','".$POST['txtPrecioExamen']."',
         '".$POST['txtNombreDoctor']."','".$POST['txtHospital']."','".$POST['txtObservaciones']."',
-        sysdate(),'".$Usuario."','#158aea','".$POST['txtTitulo']."','".$POST['txtEdad']."','".$POST['txtPrecioExamen2']."');
+        sysdate(),'".$Usuario."','#FFFFFF','".$POST['txtTitulo']."','".$POST['txtEdad']."','".$POST['txtPrecioExamen2']."');
         ";
         $this->Query($Sql);
         echo  mysqli_insert_id($this->Conexion);
@@ -50,7 +50,7 @@ class CitasM extends Conexion
         ('2','".$POST['txtFecha']."','".$POST['txtHora']."','".$POST['txtHoraFin']."','".$POST['txtDNIPaciente']."',
         '".$POST['txtNombrePaciente']."','".$POST['txtFijo']."','".$POST['txtCelular']."','".$POST['txtCodExamen']."','".$POST['txtPrecioExamen']."',
         '".$POST['txtNombreDoctor']."','".$POST['txtHospital']."','".$POST['txtObservaciones']."',
-        sysdate(),'".$Usuario."','#158aea','".$POST['txtTitulo']."','".$POST['txtEdad']."','".$POST['txtPrecioExamen2']."');
+        sysdate(),'".$Usuario."','#FFFFFF','".$POST['txtTitulo']."','".$POST['txtEdad']."','".$POST['txtPrecioExamen2']."');
         ";
         $this->Query($Sql);
         echo  mysqli_insert_id($this->Conexion);
@@ -90,7 +90,7 @@ class CitasM extends Conexion
     public function VerTodasCitas($POST){
         $SQL="SELECT NOMBRE_PACIENTE as title ,
                 CONCAT(FECHACITA,'T',HORACITA) AS start, CONCAT(FECHACITA,'T',HORAFIN) AS end,
-                COLOR AS color,'#FFFFFF' AS textColor , IDCITA AS id
+                COLOR AS color,'#000000' AS textColor , IDCITA AS id 
                 
         FROM `citas_tbl` where IDTOMOGRAFO='".$POST['IdTomografo']."'";
                                     

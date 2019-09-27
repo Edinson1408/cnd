@@ -487,9 +487,9 @@ ModalAgregarDocente=()=>{
                                     title:jQuery('#txtNombrePaciente').val() +'\n'+'Doctor:'+jQuery('#txtNombreDoctor').val(),
                                     start:jQuery('#txtFecha').val()+"T"+jQuery('#txtHora').val(),
                                     end: jQuery('#txtFecha').val()+"T"+jQuery('#txtHoraFin').val(),
-                                    color:jQuery('#color').val(),
+                                    color:'#FFFFFF',
                                     description:'asdasd',
-                                    textColor:'#FFFFFF',
+                                    textColor:'#000000',
                                     id:data,
                                     }
                                     calendar.addEvent(NuevoEvento)
@@ -592,6 +592,17 @@ ModalAgregarDocente=()=>{
                     else{
                         jQuery('#IdCruceTemporal').val($ObjCurce['Respuesta'])
                         jQuery('#largeModal').modal();
+                        //
+                        jQuery('#txtDNIPaciente').val('')
+                        jQuery('#txtFijo').val('')
+                        jQuery('#txtEdad').val('')
+                        jQuery('#txtNombrePaciente').val('')
+                        jQuery('#txtCelular').val('')
+                        jQuery('#txtPrecioExamen').val('')
+                        jQuery('#txtPrecioExamen2').val('')
+                        jQuery('#txtNombreDoctor').val('')
+                        jQuery('#txtHospital').val('')
+                        jQuery('#txtObservaciones').val('')
                                     jQuery('#CrearNuevo').css('display','');
                                     jQuery('#Actualiza').css('display','none');
                                     jQuery('#Eliminar').css('display','none');
