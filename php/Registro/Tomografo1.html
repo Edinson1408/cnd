@@ -37,7 +37,7 @@ var calendar = new FullCalendar.Calendar(calendarEl, {
     axisFormat: 'HH:mm ',
 			timeFormat: 'HH:mm ', // uppercase H for 24-hour clock
 			agenda: 'HH:mm ', // 5:00 - 6:30
-    minTime: '01:00',
+    minTime: '07:00',
 			maxTime: '24:00',
             allDaySlot: false,
 
@@ -107,7 +107,9 @@ var calendar = new FullCalendar.Calendar(calendarEl, {
 });
 
 calendar.render();
-jQuery('.fc-today-button').click()
+setTimeout(() => {
+    jQuery('.fc-today-button').click()    
+}, 1000);
 //}
 
     
