@@ -37,6 +37,10 @@ class Reporte extends Conexion
                             <td>".$row['MEDICO_ENVIA']."</td> 
                             <td>".$row['HOSPITAL']."</td>         
                             <td>".$row['OBSERVACIONES']."</td> 
+                            <td>".$row['USER_CREATE']."</td> 
+                            <td>".$row['USER_UPDATE']."</td> 
+
+                            
                             </tr>";
             $concatener=$concatener.$Cadena;
             }
@@ -63,6 +67,7 @@ $Tabla=$oje->ReporteTomografos($IdTomografo,$f1,$f2);
         <td colspan="5" style='text-align: center;'>Datos del Paciente</td>
         <td colspan="5" style='text-align: center;'>Datos de Procedimientos</td>
         <td rowspan="2">Observaciones</td> 
+        <td colspan="2">Auditoria</td> 
     </tr>
     <tr> 
         <td >DNI</td>
@@ -75,6 +80,8 @@ $Tabla=$oje->ReporteTomografos($IdTomografo,$f1,$f2);
         <td>PRECIO FINAL</td> 
         <td>MEDICO</td> 
         <td>HOSPITAL</td>         
+        <td>USUARIO CREA</td>
+        <td>USUARIO MODIFICA</td>
     </tr>
     <?=$Tabla?>
 </table>
