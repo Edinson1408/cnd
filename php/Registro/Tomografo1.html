@@ -47,7 +47,7 @@ var calendar = new FullCalendar.Calendar(calendarEl, {
     center: 'title',
     right: 'dayGridMonth,timeGridWeek,timeGridDay,listMonth'
   },
-  defaultDate: FechaActual,
+  defaultDate: '2019-09-16',
   navLinks: true, // can click day/week names to navigate views
   businessHours: true, // display business hours
   
@@ -274,7 +274,7 @@ ModalAgregarDocente=()=>{
                                     <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
                                     <input class="form-control" id="txtFecha" name="txtFecha" readonly>
                                 </div>
-                                <small class="form-text text-muted">ex. 99/99/9999</small>
+                                
                         </div>
                         <div class="form-group">
                                 <label class=" form-control-label">Hora Inicio</label>
@@ -282,7 +282,7 @@ ModalAgregarDocente=()=>{
                                     <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
                                     <input class="form-control" id="txtHora" name="txtHora" readonly>
                                 </div>
-                                <small class="form-text text-muted">ex. 99/99/9999</small>
+                                
                         </div>
                     </div>
                    
@@ -293,7 +293,7 @@ ModalAgregarDocente=()=>{
                                             <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
                                             <input class="form-control" id="txtTitulo" name="txtTitulo" value="Resonador 1" >
                                         </div>
-                                        <small class="form-text text-muted">ex. 99/99/9999</small>
+                                        
                                 </div>
                                 <div class="form-group">
                                         <label class=" form-control-label">Hora Fin</label>
@@ -301,7 +301,7 @@ ModalAgregarDocente=()=>{
                                             <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
                                             <input class="form-control" id="txtHoraFin" name="txtHoraFin" >
                                         </div>
-                                        <small class="form-text text-muted">ex. 99/99/9999</small>
+                                        
                                 </div>
                         </div>
                    </div>
@@ -316,7 +316,7 @@ ModalAgregarDocente=()=>{
                                             <div class="input-group-addon" onclick="Paciente()" style="cursor:pointer"><i class="fa fa-search"></i></div>
                                             <input class="form-control" id="txtDNIPaciente" name="txtDNIPaciente" >
                                         </div>
-                                        <small class="form-text text-muted">ex. 99/99/9999</small>
+                                        
                                 </div>
 
                                 <div class="form-group">
@@ -325,7 +325,7 @@ ModalAgregarDocente=()=>{
                                         <div class="input-group-addon" onclick="Paciente()" style="cursor:pointer"><i class="fa fa-calendar"></i></div>
                                         <input class="form-control" id="txtFijo" name="txtFijo" >
                                     </div>
-                                    <small class="form-text text-muted">ex. 99/99/9999</small>
+                                    
                             </div>
 
                             <div class="form-group">
@@ -334,7 +334,7 @@ ModalAgregarDocente=()=>{
                                         <div class="input-group-addon"  style="cursor:pointer"><i class="fa fa-calendar"></i></div>
                                         <input class="form-control" id="txtEdad" name="txtEdad" >
                                     </div>
-                                    <small class="form-text text-muted">ex. 99/99/9999</small>
+                                    
                             </div>
 
 
@@ -346,7 +346,7 @@ ModalAgregarDocente=()=>{
                                             <div class="input-group-addon" ><i class="fa fa-user"></i></div>
                                             <input class="form-control" id="txtNombrePaciente" name="txtNombrePaciente" >
                                         </div>
-                                        <small class="form-text text-muted">ex. 99/99/9999</small>
+                                        
                                 </div>
                                 <div class="form-group">
                                     <label class=" form-control-label">Celular</label>
@@ -354,7 +354,7 @@ ModalAgregarDocente=()=>{
                                         <div class="input-group-addon" onclick="Paciente()" style="cursor:pointer"><i class="fa fa-calendar"></i></div>
                                         <input class="form-control" id="txtCelular" name="txtCelular" >
                                     </div>
-                                    <small class="form-text text-muted">ex. 99/99/9999</small>
+                                    
                             </div>
                         </div>
                    </div>
@@ -371,7 +371,7 @@ ModalAgregarDocente=()=>{
                                             <select class="form-control" id="txtCodExamen" name="txtCodExamen" >
                                             </select>
                                         </div>
-                                        <small class="form-text text-muted">ex. 99/99/9999</small>
+                                        
                                 </div>
 
                                 <div class="form-group">
@@ -380,7 +380,7 @@ ModalAgregarDocente=()=>{
                                         <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
                                         <input class="form-control" id="txtPrecioExamen2" name="txtPrecioExamen2" >
                                     </div>
-                                    <small class="form-text text-muted">ex. 99/99/9999</small>
+                                    
                             </div>
 
                         </div>
@@ -391,7 +391,7 @@ ModalAgregarDocente=()=>{
                                             <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
                                             <input class="form-control" id="txtPrecioExamen" name="txtPrecioExamen" readonly>
                                         </div>
-                                        <small class="form-text text-muted">ex. 99/99/9999</small>
+                                        
                                 </div>
                         </div>
                    </div>
@@ -414,7 +414,7 @@ ModalAgregarDocente=()=>{
                                             <div class="input-group-addon"><i class="fa fa-user"></i></div>
                                             <input class="form-control" id="txtNombreDoctor" name="txtNombreDoctor" >
                                         </div>
-                                        <small class="form-text text-muted">ex. 99/99/9999</small>
+                                        
                                 </div>
                         </div>
                         <div class="col-xs-6 col-sm-6">

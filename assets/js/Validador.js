@@ -66,7 +66,7 @@ ValidaSession=()=>{
                data : {'Peticion':'VerSessiones'},
                success:(data)=>{
                    //console.log(data);
-                   $Objeto=JSON.parse(data);
+                   
                    //console.log($Objeto)
                    $Usuario=data.trim();
                    console.log($Usuario.indexOf('Notice</b>:  Undefined index: USUARIO'))
@@ -79,7 +79,7 @@ ValidaSession=()=>{
                         window.location.replace("index.html");
                        }
                        else {
-                           
+                        $Objeto=JSON.parse(data);        
                            if ($Objeto[0]['ESTADO']=='A') {
                                //TODO ESTA BIEN
                                $NOMBREUSUARIO=$Objeto[0]['PRIMER_NOMBRE']+$Objeto[0]['SEGUNDO_NOMBRE']+$Objeto[0]['APELLIDOS'];

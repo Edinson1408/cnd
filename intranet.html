@@ -83,7 +83,7 @@
                     <li class="menu-item-has-children dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-laptop"></i>Mantenimiento</a>
                         <ul class="sub-menu children dropdown-menu">
-                            <li><i class="fa fa-file-word-o"></i><a onclick="Rutas('Registro','Usuario')">Contraseña</a></li>
+                            <li><i class="fa fa-file-word-o"></i><a onclick="Rutas('Registro','Usuario')">Contrase帽a</a></li>
                             <li><i class="fa fa-file-word-o"></i><a onclick="Salir();">Salir</a></li>
                         </ul>
                     </li>
@@ -130,7 +130,7 @@
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="largeModalLabel">Configuración de Usuario</h5>
+                    <h5 class="modal-title" id="largeModalLabel">Configuraci贸n de Usuario</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -189,6 +189,7 @@
 
 </body>
 <script>
+    
     Salir=()=>{
                 jQuery.ajax({
                     url:`php/Utlis/Utlis.php`,
@@ -199,5 +200,52 @@
                     }
                 });
            }
+
+
+
+let URLactual = window.location;
+var hash=URLactual['hash'];
+EvaluaRuta=(hash)=>{
+if(hash=='')
+{
+    console.log('no hay nada ');
+}
+else {
+//Enrutaremos
+var str = hash;
+str = str.replace('#/','');
+console.log(str)
+        if (str=='Tomografo1'  || str=='Tomografo2'){
+            Rutas('Registro',str);
+        }
+        if(str=='Reporte1' || str=='Reporte2')
+        {
+            Rutas('Reportes',str);
+        }
+        if (str=='Usuario') {
+            
+            Rutas('Registro',str);
+        }
+
+        
+
+
+}
+
+// var pathArray = window.location.pathname.split( '/' );
+// var indexOfSegment = pathArray.indexOf(window.location.hostname);   
+// var base_url = window.location.origin + pathArray.slice(0,indexOfSegment-1).join('/') + '/';
+// console.log(base_url)
+
+
+}
+
+EvaluaRuta(hash);
+
+// var URLactual = window.location;
+// console.log(URLactual);
+//var URLactual = window.location.href;
+//console.log(URLactual);
+//http://localhost/CND/intranet.html#/user
 </script>
 </html>
