@@ -1,15 +1,30 @@
 <div class="col-xs-6 col-sm-6">
         <div class="card">
             <div class="card-header">
-                <strong>Reporte </strong> <small>Tomografo 1</small>
+                <strong>Reporte </strong> <small>Resonador</small>
             </div>
             <form id="UsuarioFormulario">
             <div class="card-body card-block">
+                    <div class="form-group">
+                            <label class=" form-control-label">Resonador</label>
+                            <div class="input-group">
+                                
+                                <select class="form-control"  id="IdTomografo" name="IdTomografo" >
+                                    <option value="1">Resonador 1</option>
+                                    <option value="2">Resonador 2</option>
+                                </select>
+
+                                
+                            </div>
+                            <small class="form-text text-muted"></small>
+                        </div>
+    
+                        
                 <div class="form-group">
                     <label class=" form-control-label">Fecha Inicio</label>
                     <div class="input-group">
                         <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
-                        <input class="form-control"  type="date" id="IdTomografo" name="Usuario" value="1" style="display: none">
+                        
                         <input class="form-control"  type="date" id="f1" name="Usuario">
                     </div>
                     <small class="form-text text-muted"></small>
@@ -37,7 +52,7 @@
                 $IdTomografo=jQuery('#IdTomografo').val();
                 $f1=jQuery('#f1').val();
                 $f2=jQuery('#f2').val();
-                $Ruta=`php/Utlis/Reporte.php?IdTomografo=1&F1=`+$f1+`&F2=`+$f2;
+                $Ruta=`php/Utlis/Reporte.php?IdTomografo=`+$IdTomografo+`&F1=`+$f1+`&F2=`+$f2;
                 window.open($Ruta, '_blank')
                     
                }
