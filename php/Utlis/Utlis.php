@@ -18,6 +18,12 @@ class UtlisM extends Conexion
             return json_encode($Query);
     }
 
+    public function ArmaSelectCascada($Tabla,$Id,$Des,$CampoWhere,$ValorWhere){
+        $Sql="SELECT $Id,$Des FROM $Tabla where $CampoWhere = '$ValorWhere' ";
+        $Query=$this->SelectArray($Sql);
+        return json_encode($Query);
+    }
+
     public function CambiarContrasena($POST){
         $Sql="UPDATE `usuarios_tbl` SET `CONTRASENA`='".$POST['Pass']."' WHERE NOMBRE='".$POST['Usuarios']."' ";
         $this->Query($Sql);
@@ -45,6 +51,10 @@ switch ($_POST['Peticion']) {
     case 'ArmaSelect':
         $selec=$Objeto->ArmaSelect($_POST['Tabla'],$_POST['Id'],$_POST['Des']);
         echo $selec;
+        break;
+    case 'ArmaSelectCascada':
+            $selec=$Objeto->ArmaSelectCascada($_POST['Tabla'],$_POST['Id'],$_POST['Des'],$_POST['CampoW'],$_POST['ValorW']);
+            echo $selec;
         break;
     case 'VerSessiones':
         //echo $_SESSION['USUARIO'];

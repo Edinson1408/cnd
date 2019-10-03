@@ -59,6 +59,35 @@ ArmarSelect=($valor,$Tabla,$Id,$Des,$I)=>{
 
 }
 
+ArmarSelectCascada=($valor,$Tabla,$Id,$Des,$CampoW,$ValorW)=>{
+    jQuery.ajax({
+        url:`php/Utlis/Utlis.php`,
+        method:'POST',
+        data : {'Peticion':'ArmaSelectCascada','Tabla':$Tabla,'Id':$Id,'Des':$Des,'CampoW':$CampoW,'ValorW':$ValorW},
+        success:(data)=>{  
+            //console.log(data);
+            
+            Objeto=JSON.parse(data);
+            Objeto2=JSON.parse(Objeto);
+            
+            var res='';
+            Object.keys(Objeto2).forEach(
+                key =>{
+                    console.log(key, Objeto2[key])
+                    $HtmlTablas=`
+                    <option value='${Objeto2[key][$Id]}'>${Objeto2[key][$Des]}</option>
+                      `;
+                     res = res.concat($HtmlTablas);
+                }) 
+                Respuesta=' <option >Seleccione un Examen</option>' +res;
+              jQuery('#'+$valor).html(Respuesta);
+        }
+    });
+
+}
+
+
+
 ValidaSession=()=>{
    jQuery.ajax({
                url:`php/Utlis/Utlis.php`,
