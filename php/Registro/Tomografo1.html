@@ -445,6 +445,19 @@ ModalAgregarDocente=()=>{
                                 </div>
                         </div>  
                    </div>
+
+                   <div class="row">
+                            <div class="col-xs-6 col-sm-6">
+                                    <div class="form-group">
+                                        <label class=" form-control-label">Visitador Medico</label>
+                                            <div class="input-group">
+                                                <div class="input-group-addon"  style="cursor:pointer"><i class="fa fa-calendar"></i></div>
+                                                    <input class="form-control" id="txtVisitador" name="txtVisitador" >
+                                            </div>                        
+                                            </div>
+                            </div>  
+                   </div>
+
                  <textarea type="text" id="txtDescripcion" row='3' name="txtDescripcion"  style="display: none"></textarea><br>
                     <input type="color" id="color" value="#158aea" style="display: none">
                 
@@ -822,4 +835,26 @@ ModalAgregarDocente=()=>{
             });
 
         }
+
+
+        jQuery('#txtCodExamen').change(()=>{
+            ArmarSelectCascada('txtAlternativo','ADICIONAL_EXAMEN_TBL','ID_ADICIONAL','NOMBRE','ID_EXAMEN',jQuery('#txtCodExamen').val());
+        });
+
+        jQuery('#txtAlternativo').change(()=>{
+            var CostoExamen=jQuery('#txtPrecioExamen').val();
+            var pointNum = parseFloat(CostoExamen);
+            if (jQuery('#txtAlternativo').val()=='0') {
+                console.log(pointNum-150);
+                jQuery('#txtPrecioExamen').val(pointNum-150);
+            }
+            else{
+                console.log(pointNum+150);
+                jQuery('#txtPrecioExamen').val(pointNum+150);
+            }
+            
+            
+            
+        })
+
     </script>

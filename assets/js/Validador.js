@@ -79,7 +79,7 @@ ArmarSelectCascada=($valor,$Tabla,$Id,$Des,$CampoW,$ValorW)=>{
                       `;
                      res = res.concat($HtmlTablas);
                 }) 
-                Respuesta=' <option >Seleccione un Examen</option>' +res;
+                Respuesta=' <option value="0" >Seleccione un Examen</option>' +res;
               jQuery('#'+$valor).html(Respuesta);
         }
     });
