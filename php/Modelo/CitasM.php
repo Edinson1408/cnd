@@ -61,9 +61,18 @@ class CitasM extends Conexion
          $Valida=$this->SelectArray($SQL);
          if ($Valida=='[]')
          {
-            $SqlInsert="INSERT INTO cita_temporal (`FECHA`, `HORA`,`IDTOMOGRAFO`) VALUES ('".$POST['Fecha']."','".$POST['Hora']."','".$POST['IdTomografo']."')";
-            $this->Insert($SqlInsert);
-            return mysqli_insert_id($this->Conexion);
+            //si no presenta cruce , validamos la tabla de citas 
+            $SQL2="SELECT IDCITA FROM `citas_tbl` WHERE FECHACITA='".$POST['Fecha']."'  AND HORACITA='".$POST['Hora']."' and IDTOMOGRAFO='".$POST['IdTomografo']."'";
+            $Valida2=$this->SelectArray($SQL2);
+                if ($Valida2=='[]')
+                {
+                    $SqlInsert="INSERT INTO cita_temporal (`FECHA`, `HORA`,`IDTOMOGRAFO`) VALUES ('".$POST['Fecha']."','".$POST['Hora']."','".$POST['IdTomografo']."')";
+                    $this->Insert($SqlInsert);
+                    return mysqli_insert_id($this->Conexion);
+                }else {
+                    return 'Con Cruce';
+                }
+
          }
          else{
             return 'Con Cruce';
