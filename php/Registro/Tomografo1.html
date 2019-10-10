@@ -235,6 +235,8 @@ var calendar = new FullCalendar.Calendar(calendarEl, {
     
     ArmarSelect('txtCodExamen','examenes_tbl','ID_EXAMEN','NOMBRE_EXAMEN','')
     ArmarSelect('txtAlternativo','adicional_examen_tbl','ID_ADICIONAL','NOMBRE','');
+    ArmarSelect('txtVisitador','visitador_medico_tbl','ID_VISITADOR','NOMBRE_COMPLETO','')
+    
     console.log('hora fin');
     console.log(horaFin);
     BuscaCruce(Fecha,Hora);    
@@ -364,6 +366,7 @@ ModalAgregarDocente=()=>{
                                 jQuery('#IdCarrera').val();
                                 jQuery('#Periodo').val();*/
                                 ArmarSelect('IdCarrera','carreras_tbl','IDCARRERA','DESCR250','');
+                                ArmarSelect('txtVisitador','visitador_medico_tbl','ID_VISITADOR','NOMBRE_COMPLETO','')
                                 ArmarSelect('txtAlternativo','adicional_examen_tbl','ID_ADICIONAL','NOMBRE','');
                             }else{
                                 console.log('Registrar');
@@ -377,6 +380,7 @@ ModalAgregarDocente=()=>{
                                 }
                                 ArmarSelect('IdCarrera','carreras_tbl','IDCARRERA','DESCR250','');
                                 ArmarSelect('txtAlternativo','adicional_examen_tbl','ID_ADICIONAL','NOMBRE','');
+                                ArmarSelect('txtVisitador','visitador_medico_tbl','ID_VISITADOR','NOMBRE_COMPLETO','')
                                 
                             }
                             jQuery('#profile-tab').click()
@@ -617,7 +621,8 @@ ModalAgregarDocente=()=>{
                                         <label class=" form-control-label">Visitador Medico</label>
                                             <div class="input-group">
                                                 <div class="input-group-addon"  style="cursor:pointer"><i class="fa fa-calendar"></i></div>
-                                                    <input class="form-control" id="txtVisitador" name="txtVisitador" >
+                                                    <!-- <input class="form-control" id="txtVisitador" name="txtVisitador" > -->
+                                                    <select class="form-control" name="txtVisitador" id="txtVisitador"></select>
                                             </div>                        
                                             </div>
                             </div>  
@@ -866,6 +871,7 @@ ModalAgregarDocente=()=>{
                                     console.log(ObjCita)
                                     console.log(ObjCita[0]);
                                     ArmarSelect('txtCodExamen','examenes_tbl','ID_EXAMEN','NOMBRE_EXAMEN','')
+                                    ArmarSelect('txtVisitador','visitador_medico_tbl','ID_VISITADOR','NOMBRE_COMPLETO','')
                                     jQuery('#txtFecha').val(ObjCita[0]['FECHACITA']);
                                     jQuery('#txtHora').val(ObjCita[0]['HORACITA']);
                                     jQuery('#txtTitulo').val(ObjCita[0]['Titulo']);
@@ -882,6 +888,7 @@ ModalAgregarDocente=()=>{
                                     
                                     
                                     setTimeout(function(){ jQuery('#txtCodExamen').val(ObjCita[0]['IDEXAMEN']); }, 1000);
+                                    setTimeout(function(){ jQuery('#txtVisitador').val(ObjCita[0]['ID_VISITADOR']); }, 1000);
 
                                     jQuery('#txtPrecioExamen').val(ObjCita[0]['PRECIO_EXAMEN'])
                                     jQuery('#txtNombreDoctor').val(ObjCita[0]['MEDICO_ENVIA'])
@@ -904,6 +911,7 @@ ModalAgregarDocente=()=>{
                                         console.log(ObjCita)
                                         console.log(ObjCita[0]);
                                         ArmarSelect('txtCodExamen','examenes_tbl','ID_EXAMEN','NOMBRE_EXAMEN','')
+                                        ArmarSelect('txtVisitador','visitador_medico_tbl','ID_VISITADOR','NOMBRE_COMPLETO','')
                                         jQuery('#txtFecha').val(ObjCita[0]['FECHACITA']);
                                         jQuery('#txtHora').val(ObjCita[0]['HORACITA']);
                                         jQuery('#txtTitulo').val(ObjCita[0]['Titulo']);
@@ -920,6 +928,7 @@ ModalAgregarDocente=()=>{
                                         
                                         
                                         setTimeout(function(){ jQuery('#txtCodExamen').val(ObjCita[0]['IDEXAMEN']); }, 1000);
+                                        setTimeout(function(){ jQuery('#txtVisitador').val(ObjCita[0]['ID_VISITADOR']); }, 1000);
 
                                         jQuery('#txtPrecioExamen').val(ObjCita[0]['PRECIO_EXAMEN'])
                                         jQuery('#txtNombreDoctor').val(ObjCita[0]['MEDICO_ENVIA'])
@@ -961,8 +970,11 @@ ModalAgregarDocente=()=>{
                             console.log(data);
                             calendar.render();
                             jQuery('#largeModal').modal('hide');
-                            jQuery('#ClickTomografo').click()
+                            //jQuery('#ClickTomografo').click()
                             jQuery('.modal-backdrop').remove();
+                            var event = calendar.getEventById(jQuery('#IdCita').val());
+                            var nuevotitle=jQuery('#txtNombrePaciente').val() +'\n'+'Doctor:'+jQuery('#txtNombreDoctor').val();
+                            event.setProp('title', nuevotitle);
                             // var NuevoEvento={
                             //         title:jQuery('#txtTitulo').val() +'\n'+'Doctor:'+jQuery('#txtNombreDoctor').val(),
                             //         start:jQuery('#txtFecha').val()+"T"+jQuery('#txtHora').val(),
@@ -993,9 +1005,10 @@ ModalAgregarDocente=()=>{
                             console.log(data);
                             //calendar.render();
                             jQuery('#largeModal').modal('hide');
-                            jQuery('#ClickTomografo').click()
+                            //jQuery('#ClickTomografo').click()
                             jQuery('.modal-backdrop').remove();
-                            
+                               var eventSource = calendar.getEventById(jQuery('#IdCita').val());
+                                eventSource.remove();
                             }
             });
 
@@ -1048,5 +1061,20 @@ ModalAgregarDocente=()=>{
             
             
         // })
+
+        function RemoveEvento() {
+            // console.log(calendar.getEventSources())
+            // console.log(calendar.getEventById(1)['title']='hola')
+            // calendar.getEventById(1)['title']='hola';
+
+            // console.log(calendar.getEventById(1));
+            // var eventSource = calendar.getEventById(3);
+            // eventSource.remove();
+            // console.log(calendar.eventSources)
+            // console.log(calendar)
+            var event = calendar.getEventById('3');
+        event.setProp('title', 'new title');
+            
+        }
 
     </script>

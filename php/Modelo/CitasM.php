@@ -20,11 +20,11 @@ class CitasM extends Conexion
         $Usuario=$_SESSION['USUARIO'];
         $Sql=" INSERT INTO `citas_tbl`(`IDTOMOGRAFO`, `FECHACITA`, `HORACITA`, `HORAFIN`, `DNI_PACIENTE`, 
         `NOMBRE_PACIENTE`, `TELEFONO_PACIENTE`, `CELULAR_PACIENTE`, `IDEXAMEN`, `PRECIO_EXAMEN`, 
-        `MEDICO_ENVIA`, `HOSPITAL`, `OBSERVACIONES`, `DATE_CREATE`, `USER_CREATE`,`COLOR`,`Titulo`,`EDAD`,`PRECIO2`) value 
+        `MEDICO_ENVIA`, `HOSPITAL`, `OBSERVACIONES`, `DATE_CREATE`, `USER_CREATE`,`COLOR`,`Titulo`,`EDAD`,`PRECIO2`,`ID_VISITADOR`) value 
         ('1','".$POST['txtFecha']."','".$POST['txtHora']."','".$POST['txtHoraFin']."','".$POST['txtDNIPaciente']."',
         '".$POST['txtNombrePaciente']."','".$POST['txtFijo']."','".$POST['txtCelular']."','".$POST['txtCodExamen']."','".$POST['txtPrecioExamen']."',
         '".$POST['txtNombreDoctor']."','".$POST['txtHospital']."','".$POST['txtObservaciones']."',
-        sysdate(),'".$Usuario."','#FFFFFF','".$POST['txtTitulo']."','".$POST['txtEdad']."','".$POST['txtPrecioExamen2']."');
+        sysdate(),'".$Usuario."','#FFFFFF','".$POST['txtTitulo']."','".$POST['txtEdad']."','".$POST['txtPrecioExamen2']."','".$POST['txtVisitador']."');
         ";
         $this->Query($Sql);
         echo  mysqli_insert_id($this->Conexion);
@@ -46,11 +46,11 @@ class CitasM extends Conexion
         $Usuario=$_SESSION['USUARIO'];
         $Sql=" INSERT INTO `citas_tbl`(`IDTOMOGRAFO`, `FECHACITA`, `HORACITA`, `HORAFIN`, `DNI_PACIENTE`, 
         `NOMBRE_PACIENTE`, `TELEFONO_PACIENTE`, `CELULAR_PACIENTE`, `IDEXAMEN`, `PRECIO_EXAMEN`, 
-        `MEDICO_ENVIA`, `HOSPITAL`, `OBSERVACIONES`, `DATE_CREATE`, `USER_CREATE`,`COLOR`,`Titulo`,`EDAD`,`PRECIO2`) value 
+        `MEDICO_ENVIA`, `HOSPITAL`, `OBSERVACIONES`, `DATE_CREATE`, `USER_CREATE`,`COLOR`,`Titulo`,`EDAD`,`PRECIO2`,`ID_VISITADOR`) value 
         ('2','".$POST['txtFecha']."','".$POST['txtHora']."','".$POST['txtHoraFin']."','".$POST['txtDNIPaciente']."',
         '".$POST['txtNombrePaciente']."','".$POST['txtFijo']."','".$POST['txtCelular']."','".$POST['txtCodExamen']."','".$POST['txtPrecioExamen']."',
         '".$POST['txtNombreDoctor']."','".$POST['txtHospital']."','".$POST['txtObservaciones']."',
-        sysdate(),'".$Usuario."','#FFFFFF','".$POST['txtTitulo']."','".$POST['txtEdad']."','".$POST['txtPrecioExamen2']."');
+        sysdate(),'".$Usuario."','#FFFFFF','".$POST['txtTitulo']."','".$POST['txtEdad']."','".$POST['txtPrecioExamen2']."','".$POST['txtVisitador']."');
         ";
         $this->Query($Sql);
         echo  mysqli_insert_id($this->Conexion);
@@ -119,7 +119,8 @@ class CitasM extends Conexion
                         `EDAD`='".$POST['txtEdad']."',
                         PRECIO2='".$POST['txtPrecioExamen2']."',
                         DATE_UPDATE=sysdate(),
-                        USER_UPDATE='".$Usuario."'
+                        USER_UPDATE='".$Usuario."',
+                        ID_VISITADOR='".$POST['txtVisitador']."'
                         WHERE IDCITA='".$POST['IdCita']."' ";
         $this->Query($Sql);
     }
