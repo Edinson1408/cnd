@@ -156,3 +156,16 @@ console.log(FechaActual)
 
 
 setInterval('ValidaSession()',600000);
+
+
+
+//pondremos las acciones que queremos que realize 
+window.onkeyup = compruebaTecla;
+function compruebaTecla(){
+    var e = window.event;
+    var tecla = (document.all) ? e.keyCode : e.which;
+    if(tecla == 27){
+                console.log ('has precionado escape')
+                EliminaCruce();
+    }
+}
