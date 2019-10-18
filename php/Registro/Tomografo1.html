@@ -566,8 +566,8 @@ ModalAgregarDocente=()=>{
                                         <label class=" form-control-label">Contraste </label>
                                         <div class="input-group">
                                             
-                                            <label for="micheckbox" class="si si-switcher">
-                                                    <input type="checkbox" id="micheckbox" />
+                                            <label for="micheckbox"  class="si si-switcher">
+                                                    <input type="checkbox" id="micheckbox" name='CONTRASTE' />
                                                     <b class="si-label" id='sino'>No</b>
                                                   </label>
                                                     
@@ -674,8 +674,20 @@ ModalAgregarDocente=()=>{
             [value-3],[value-4],[value-5],[value-6],[value-7],[value-8],[value-9],[value-10],[value-11],
             [value-12],[value-13],[value-14],[value-15],[value-16],[value-17],[value-18])
             */
+            var Conctraste;
+            if(jQuery('#micheckbox').is(':checked'))
+            {
+                Conctraste='SI'
+            }else{
+                Conctraste='NO'
+            }
+
             var Datos=jQuery('#FormularioEnnviar').serialize();
             Datos=Datos+'&Peticion=AgregarDoctor';
+
+            
+            Datos=Datos+'&CONTRASTE='+Conctraste;
+
             jQuery.ajax({
                 url:`php/Controlador/CitasC.php`,
                 type: 'POST',
@@ -892,6 +904,12 @@ ModalAgregarDocente=()=>{
                                     
                                     setTimeout(function(){ jQuery('#txtCodExamen').val(ObjCita[0]['IDEXAMEN']); }, 1000);
                                     setTimeout(function(){ jQuery('#txtVisitador').val(ObjCita[0]['ID_VISITADOR']); }, 1000);
+                                    
+                                    if(ObjCita[0]['CONTRASTE']=='SI')
+                                    {
+                                        setTimeout(function(){ jQuery('#micheckbox').click(); }, 1000);
+                                        
+                                    }
 
                                     jQuery('#txtPrecioExamen').val(ObjCita[0]['PRECIO_EXAMEN'])
                                     jQuery('#txtNombreDoctor').val(ObjCita[0]['MEDICO_ENVIA'])
@@ -932,6 +950,12 @@ ModalAgregarDocente=()=>{
                                         
                                         setTimeout(function(){ jQuery('#txtCodExamen').val(ObjCita[0]['IDEXAMEN']); }, 1000);
                                         setTimeout(function(){ jQuery('#txtVisitador').val(ObjCita[0]['ID_VISITADOR']); }, 1000);
+
+                                        if(ObjCita[0]['CONTRASTE']=='SI')
+                                        {
+                                            setTimeout(function(){ jQuery('#micheckbox').click(); }, 1000);
+                                            
+                                        }
 
                                         jQuery('#txtPrecioExamen').val(ObjCita[0]['PRECIO_EXAMEN'])
                                         jQuery('#txtNombreDoctor').val(ObjCita[0]['MEDICO_ENVIA'])
