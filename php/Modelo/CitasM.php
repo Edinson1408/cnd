@@ -22,7 +22,7 @@ class CitasM extends Conexion
         `NOMBRE_PACIENTE`, `TELEFONO_PACIENTE`, `CELULAR_PACIENTE`, `IDEXAMEN`, `PRECIO_EXAMEN`, 
         `MEDICO_ENVIA`, `HOSPITAL`, `OBSERVACIONES`, `DATE_CREATE`, `USER_CREATE`,`COLOR`,`Titulo`,`EDAD`,`PRECIO2`,`ID_VISITADOR`,`CONTRASTE`) value 
         ('1','".$POST['txtFecha']."','".$POST['txtHora']."','".$POST['txtHoraFin']."','".$POST['txtDNIPaciente']."',
-        '".$POST['txtNombrePaciente']."','".$POST['txtFijo']."','".$POST['txtCelular']."','".$POST['txtCodExamen']."','".$POST['txtPrecioExamen']."',
+        '".utf8_decode($POST['txtNombrePaciente'])."','".$POST['txtFijo']."','".$POST['txtCelular']."','".$POST['txtCodExamen']."','".$POST['txtPrecioExamen']."',
         '".$POST['txtNombreDoctor']."','".$POST['txtHospital']."','".$POST['txtObservaciones']."',
         sysdate(),'".$Usuario."','#FFFFFF','".$POST['txtTitulo']."','".$POST['txtEdad']."','".$POST['txtPrecioExamen2']."','".$POST['txtVisitador']."','".$POST['CONTRASTE']."'); 
         ";
@@ -48,7 +48,7 @@ class CitasM extends Conexion
         `NOMBRE_PACIENTE`, `TELEFONO_PACIENTE`, `CELULAR_PACIENTE`, `IDEXAMEN`, `PRECIO_EXAMEN`, 
         `MEDICO_ENVIA`, `HOSPITAL`, `OBSERVACIONES`, `DATE_CREATE`, `USER_CREATE`,`COLOR`,`Titulo`,`EDAD`,`PRECIO2`,`ID_VISITADOR`,`CONTRASTE`) value 
         ('2','".$POST['txtFecha']."','".$POST['txtHora']."','".$POST['txtHoraFin']."','".$POST['txtDNIPaciente']."',
-        '".$POST['txtNombrePaciente']."','".$POST['txtFijo']."','".$POST['txtCelular']."','".$POST['txtCodExamen']."','".$POST['txtPrecioExamen']."',
+        '".utf8_decode($POST['txtNombrePaciente'])."','".$POST['txtFijo']."','".$POST['txtCelular']."','".$POST['txtCodExamen']."','".$POST['txtPrecioExamen']."',
         '".$POST['txtNombreDoctor']."','".$POST['txtHospital']."','".$POST['txtObservaciones']."',
         sysdate(),'".$Usuario."','#FFFFFF','".$POST['txtTitulo']."','".$POST['txtEdad']."','".$POST['txtPrecioExamen2']."','".$POST['txtVisitador']."','".$POST['CONTRASTE']."');
         ";
@@ -116,7 +116,7 @@ class CitasM extends Conexion
                         HORACITA='".$POST['txtHora']."',
                         HORAFIN='".$POST['txtHoraFin']."',
                         DNI_PACIENTE='".$POST['txtDNIPaciente']."', 
-                        NOMBRE_PACIENTE='".$POST['txtNombrePaciente']."',
+                        NOMBRE_PACIENTE='".utf8_decode($POST['txtNombrePaciente'])."',
                         TELEFONO_PACIENTE='".$POST['txtFijo']."',
                         CELULAR_PACIENTE='".$POST['txtCelular']."',
                         IDEXAMEN='".$POST['txtCodExamen']."',
